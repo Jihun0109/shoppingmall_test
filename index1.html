@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>福源泉</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<script type="text/javascript" src="js/common.js"></script>
+	    <script type="text/javascript" src="js/camera.js"></script>
+	    <script type="text/javascript" src="js/barcode.js" ></script>
+	    <script type="text/javascript" src="js/jquery-1.10.2.js" ></script>
+	    <link href="css/mui.min.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="css/ng.css" />
+	    <link rel="stylesheet" href="css/mui.css" />
+	    <link href="css/icons-extra.css" rel="stylesheet"/> 
+	    <link href="css/icomoon.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="css/camera-image.css" />
+	    <link rel="stylesheet" href="css/starscore.css" />
+	    <link rel="stylesheet" href="css/ng.css" />
+	    <style>
+	    	.foot_center {
+			    position: relative;
+			    bottom: 18px;
+			  	width: 100%;
+			   	height: 100%;
+			}
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #f99c73;
+			}
+
+	    </style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" >
+			<div id="dcontent" class="dcontent mui-col-sm-2 mui-col-xs-2">
+				<button onclick="getImage()"  class="button mui-btn mui-pull-left mui-icon mui-icon-camera headerbtn" style="font-size: 2.2em; padding-left: 2%; line-height: 0.35em; background: none;"></button>
+			</div>
+		        <div class="mui-title mui-bar mui-bar-tab bar-border">
+					<a class="mui-h4 mui-tab-item mui-active" id="home-home" href="follow.html">关注</a>
+					<a class="mui-h4 mui-tab-item" href="hot-item.html">热门</a>
+				</div>
+		    <div class="mui-col-sm-2 mui-col-xs-2 mui-pull-right">
+		    	<button onclick="clicked('barcode_scan2.html',true,true)" class="mui-btn mui-pull-right mui-icon-extra mui-icon-extra-sweep headerbtn" style="padding-right: 0; padding-top: 1%; font-size: 1.5em; background: none;"></button>
+		    </div>
+		</header>
+		<!--	头部结束	-->
+		<nav class="mui-bar mui-bar-tab" style="height: 60px;">
+			<a class="mui-tab-item mui-active" id="home-home" href="follow.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label fz13">首页</span>
+			</a>
+			<a class="mui-tab-item" href="read-index.html">
+				<span class="mui-icon mui-icon-map"></span>
+				<span class="mui-tab-label fz13">附近</span>
+			</a>			
+			<a class="mui-tab-item" href="search.html">
+				<img alt="爆品" style="width: 75px; height: auto; z-index: 9999;" src="images/foot_login.png" />
+				<!--<span class="mui-tab-label fz13">爆品</span>-->
+			</a>
+			<a class="mui-tab-item" href="active-index.html">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-order" style="font-size: 1.3em;"></span>
+				<span class="mui-tab-label fz13">订单</span>
+			</a>
+			<a class="mui-tab-item" id="user-center" href="user-center.html">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label fz13">我</span>
+			</a>
+		</nav>
+		
+		<script src="js/func.js"></script>
+		<script src="js/mui.min.js"></script>	
+		<script src="js/jquery-1.9.1.min.js"></script>
+				<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var subpages = ['follow.html', 'hot-item.html', 'read-index.html', 'search.html','active-index.html', 'user-center.html'];
+			var subpage_style = {
+				top: '48px',
+				bottom: '61px'
+			};
+			var istop=false;
+			var sub1=[null,null,null,null,null];
+			var actIndex = requestURL("showIndex");
+			actIndex = actIndex == "" ? 0 : actIndex;
+			var activeTab = null;
+			mui.plusReady(function() {	
+				
+//				plus.navigator.setStatusBarBackground("#FFFFFF");
+				plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackOpaque');
+				var self = plus.webview.currentWebview();
+				var sub = plus.webview.create(subpages[actIndex], subpages[actIndex], subpage_style);
+				sub1[actIndex] = activeTab = sub;
+				//console.log(activeTab);
+				self.append(sub);
+				
+					for (var i = 0; i < 5; i++) {
+						if (i != actIndex) {
+							sub1[i] = plus.webview.create(subpages[i], subpages[i], subpage_style);
+							sub1[i].hide();
+							self.append(sub1[i]);
+						}
+					}
+				plus.push.addEventListener( "click", function( msg ) {
+					setweblog('a_push','index.html?url'+JSON.stringify(msg));		
+					if ( msg.payload ) {
+						if ( typeof(msg.payload)=="string" ) {
+							var payload=JSON.parse(msg.payload);
+							if(payload.stype=='1' && payload.url){
+								mui.openWindow(payload.url,'payloadurl');
+							}else if(payload.stype=='2' && payload.url){
+								mui.openWindow('show.html?url='+base64encode(encodeURIComponent(payload.url)),'payloadurl');
+							}
+						} else {
+							if(msg.payload.stype=='1' && msg.payload.url){
+								mui.openWindow(msg.payload.url,'payloadurl');
+							}else if(msg.payload.stype=='2' && msg.payload.url){
+								mui.openWindow('show.html?url='+base64encode(encodeURIComponent(msg.payload.url)),'payloadurl');
+							}
+						}
+					} 
+				}, false );
+				var args= plus.runtime.arguments;
+				var url='';
+				if(args){
+					setweblog('a_urlopen','index.html?url'+args);
+						if(args.substr(0,10)=='qwzgz://ps'){
+								url=args.substr(11);
+								if(url.substr(0,4)=='http'){
+									mui.openWindow('show.html?url='+base64encode(encodeURIComponent(url)),'payloadurl');
+								}else{
+									mui.openWindow(url,'payloadurl');
+								}
+							}
+				}
+    				document.addEventListener('newintent',function(){
+				    args= plus.runtime.arguments;
+					if(args){
+						setweblog('a_urlopen','index.html?nurl'+args);
+							if(args.substr(0,10)=='qwzgz://ps'){
+								url=args.substr(11);
+								if(url.substr(0,4)=='http'){
+									mui.openWindow('show.html?url='+base64encode(encodeURIComponent(url)),'payloadurl');
+								}else{
+									mui.openWindow(url,'payloadurl');
+								}
+							}
+					}
+				},false);
+				//mui.openWindow('show.html?url='+base64encode(encodeURIComponent('http://d.ifeng.com/webppa/dy/081813/index.shtml')),'s_3_1');
+				setweblog('v_index','index.html?'+actIndex);
+				mui('.mui-bar-tab').on('tap', 'a', function(e) {
+					if(!istop){
+						istop=true;
+						var targetTab = this.getAttribute('href');
+						if (targetTab == subpages[actIndex]) {
+							istop=false;
+							return;
+						}
+						
+						for (var i = 0; i < 5; i++) {						
+							if (subpages[i] == targetTab) {
+								actIndex=i;
+							}
+						}
+						plus.webview.hide(subpages[actIndex]);
+						plus.webview.show(targetTab);
+						activeTab = targetTab;
+						setweblog('v_index',targetTab);
+						istop=false;
+					}
+				
+				});
+
+			});
+			function requestURL(paras) {
+					var url = location.href;
+					var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+					var paraObj = {}
+					for (i = 0; j = paraString[i]; i++) {
+						paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+					}
+					var returnValue = paraObj[paras.toLowerCase()];
+					if (typeof(returnValue) == "undefined") {
+						return "";
+					} else {
+						return returnValue;
+					}
+				}
+		</script>
+	</body>
+
+</html>

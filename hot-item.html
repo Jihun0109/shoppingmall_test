@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>福源泉</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<script type="text/javascript" src="js/common.js"></script>
+	    <script type="text/javascript" src="js/camera.js"></script>
+	    <script type="text/javascript" src="js/barcode.js" ></script>
+	    <script type="text/javascript" src="js/jquery-1.10.2.js" ></script>
+	    <script type="text/javascript" src="js/starScore.js" ></script>
+	    <script type="text/javascript" src="js/share.js"></script>
+	    <script type="text/javascript" src="js/bottomPopover.js" ></script>
+	    <link href="css/mui.min.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="css/mui.css" />
+	    <link href="css/icons-extra.css" rel="stylesheet"/> 
+	    <link href="css/icomoon.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="css/camera-image.css" />
+	    <link rel="stylesheet" href="css/starscore.css" />
+	    <link rel="stylesheet" href="css/ng.css" />
+	   
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav" >
+			<div id="dcontent" class="dcontent mui-col-sm-2 mui-col-xs-2">
+				<button onclick="getImage()"  class="button mui-btn mui-pull-left mui-icon mui-icon-camera headerbtn" style="font-size: 2.2em; padding-left: 2%; line-height: 0.35em; background: none;"></button>
+			</div>
+		    <div class="mui-title" style="left: 11%; right: 5%;">
+		    	<div id="SegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			        <div class="mui-scroll" style="margin-left: 10%;">
+				        <a style="padding: 0 10%;" class="mui-control-item mui-active border-radius10"  href="#item1mobile">关注</a>
+				        <a style="padding: 0 10%; margin-left: 0%;" class="mui-control-item border-radius10"  href="#item2mobile">热门</a>
+			        </div>
+		        </div>
+		    </div>
+		    <div class="mui-col-sm-2 mui-col-xs-2 mui-pull-right">
+		    	<button onclick="clicked('barcode_scan2.html',true,true)" class="mui-btn mui-pull-right mui-icon-extra mui-icon-extra-sweep headerbtn" style="padding-right: 0; padding-top: 1%; font-size: 1.5em; background: none;"></button>
+		    </div>
+		</header>-->
+		<!--	头部结束	-->
+		<div class="mui-content" style="margin-top: 44px;">
+			
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div class="mui-slider-group">
+					
+					<!--	热门页开始	-->
+					<div class="mui-slider-item mui-control-content">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view mui-grid-view mui-grid-9" style="margin-top: 0;">
+	    <li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <div class="border-radius50"><img class="mui-media-object mui-pull-left mui-icon-image" src="http://placehold.it/50x50"></div>
+	            <div class="mui-media-body">MyHome</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <div class="border-radius50"><img class="mui-media-object mui-pull-left mui-icon-image" src="http://placehold.it/50x50"></div>
+	            <div class="mui-media-body">Email</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <div class="border-radius50"><img class="mui-media-object mui-pull-left mui-icon-image" src="http://placehold.it/50x50"></div>
+	            <div class="mui-media-body">Chat</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <div class="border-radius50"><img class="mui-media-object mui-pull-left mui-icon-image" src="http://placehold.it/50x50"></div>
+	            <div class="mui-media-body">Location</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <div class="border-radius50"><img class="mui-media-object mui-pull-left mui-icon-image" src="http://placehold.it/50x50"></div>
+	            <div class="mui-media-body">Search</div>
+	        </a>
+	    </li>
+	    <!--<li class="mui-table-view-cell mui-media mui-col-xs-3 grid">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-phone"></span>
+	            <div class="mui-media-body">Phone</div>
+	        </a>
+	    </li>-->
+	    </ul>
+	    <div style="width: 100%; background-color: #ebebeb; margin-bottom: 2%;">
+	    	<div class="mui-icon icon-volume-high mui-pull-left color-f99c73" style="margin:0 1% 0 3%; line-height: 1.7em; font-size: 1.2em;"></div>
+	    	<marquee style="padding-top: 0.5%; line-height: 1.9em; font-size: 0.8em;" direction="left" align="bottom" height="22" width="85%" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="2" scrolldelay="1">水平滚动字幕内容</marquee>
+	    </div>
+	    <div class="mui-clearfix"></div>
+	    <ul class="mui-table-view" style="border-bottom: 1px solid #CCCCCC;">
+	        <li class="mui-table-view-cell mui-media" >
+	            <a href="javascript:;">
+	                <img class="mui-media-object mui-pull-left border-radius50" src="http://placehold.it/500x500">
+	                <div class="mui-media-body color-f99c73" style="font-size: 1.4em;">
+	                    幸福
+	                    <p class="mui-ellipsis">1分钟前发布</p>
+	                </div>
+	                <p><span class="mui-icon mui-icon-location-filled color-f99c73" style="font-size: 1.2em; margin-top: 2%;"></span>地址 | 1.4km</p>
+	            </a>
+	        </li>
+	    </ul>
+	    <ul class="mui-table-view mui-grid-view">
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	                <!--<div class="mui-media-body">文字说明1</div>-->
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li><li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">     
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li><li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li>
+	        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li><li class="mui-table-view-cell mui-media mui-col-xs-4">
+	            <a href="#">
+	                <img class="mui-media-object" src="http://placehold.it/400x300">
+	            </a>
+	        </li>
+	    </ul>
+	    
+	    <div class="mui-table-cell" style="background-color: #FFFFFF;">
+		    <div class="mui-pull-left mui-col-xs-7 mui-col-sm-7" style="margin-left: 3%; margin-top: 2%;">
+		    	<p>原价：<span style="text-decoration:line-through">1000元</span></p>
+		    	<p style="font-size: 1.1em;">幸福价：<span class="color-f99c73">900元</span></p></p>
+		    	<div class="content">
+				    <p class="title">人气：</p>
+				    <div id="starttwo" class="block clearfix">
+				        <div class="star_score"></div>
+				        <div class="attitude"></div>
+				    </div>
+				 </div>
+		    	<p><span>5 粘豆</span>&nbsp;
+		    		
+		    		<a href="#bottomPopover" style="color: #999999;"><span class="mui-icon-extra mui-icon-extra-share" style="font-size: 1.15em;"> 分享</span></a>
+		    		<a href="#input" style="color: #999999;"><span class="mui-icon mui-icon-chat" style="font-size: 1.15em;"> 88</span></a>
+		    		<a href="#" style="color: #999999;"><span class="mui-icon icon-thumbs-up" style="font-size: 1.15em;"> 88</span></a>
+		    	</p>
+		    </div>
+		    <div class="mui-pull-right mui-col-xs-4 mui-col-sm-4" style="padding-top:5%; margin-right: 2%;">
+				<div id="segmentedControl" style="border-color: #CCCCCC;" class="mui-segmented-control border-radius15">
+					<a class="mui-control-item" href="#item1">预约</a>
+					<a class="mui-control-item mui-active" href="#item2">购买</a>
+				</div>
+	    	</div>
+		</div>
+		<div class="clearfix" style="margin-top: 2%; width: 100%; background: #FFFFFF;"><p class="color-f99c73 ad mui-pull-right">广告</p></div>
+								<ul class="mui-table-view ad-list">
+									<li class="mui-table-view-cell">
+										<a href="javascript:;"> 
+							                <div class="mui-media-body" style="font-size: 1.5em; line-height: 1.5em;">
+							                	第2个选项卡子项-1
+							                </div>
+							                <p><span class="mui-icon mui-icon-location-filled color-f99c73" style="font-size: 1.2em;"></span>地址 | 1.4km</p>
+							                <img class=" mui-pull-left" src="http://placehold.it/300x200">
+			            				</a>
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--	热门页结束	-->
+				</div>
+			</div>	
+		</div>
+			<!--	显示分享弹框	-->
+			<div id="bottomPopover" class="box mui-popover mui-popover-action mui-popover-bottom">
+				<div class="mui-content">
+				<img id="pic" src="images/add.png" style="display: none;" />
+				</div>
+				<div style="position: absolute;bottom: 0px; width:100%;">
+				<!--<div style="height: 30px; line-height: 30px; text-align: center; background: white;">分享</div>-->
+					<ul class="mui-table-view mui-grid-view mui-grid-9" style="margin: 0;">
+						<li onclick="shareHref(1);" class="mui-table-view-cell mui-media mui-col-xs-2" style="border: none;">
+							<img class="mui-media-object" src="images/share_to_icon_wx.png">
+							<div class="mui-media-body">微信</div>
+						</li>
+						<li onclick="shareHref(0);" class="mui-table-view-cell mui-media mui-col-xs-2" style="border: none;">
+							<img class="mui-media-object" src="images/share_to_icon_wxq.png">
+							<div class="mui-media-body">朋友圈</div>
+						</li>
+						<li onclick="shareHref(2);" class="mui-table-view-cell mui-media mui-col-xs-2" style="border: none;">
+							<img class="mui-media-object" src="images/share_to_icon_qq.png">
+							<div class="mui-media-body">QQ</div>
+						</li>
+					</ul>
+				</div>
+				<input id="sharehref" style="display: none;" class="sharehref" type="url" value="www.baidu.com" placeholder="请输入要分享的链接地址" />
+				<input id="sharehrefTitle" style="display: none;" class="sharehref" type="text" value="加工详情" placeholder="请输入要分享的链接标题" />
+				<input id="sharehrefDes" style="display: none;" class="sharehref" type="text" value="我正在使用HBuilder+HTML5开发移动应用，赶紧跟我一起来体验！" placeholder="请输入要分享的链接描述" />
+			</div>
+			<!--	显示分享弹框结束	-->
+			<!--	显示评论弹框	-->
+			<form id="input" class="mui-input-group mui-popover mui-popover-action mui-popover-bottom" >
+				
+				<div class="mui-input-row" >
+					<label>评论</label>
+					<input type="text" class="mui-input-clear" placeholder="发表评论">
+				</div>
+
+				<!--<div class="mui-input-row mui-plus-visible">
+					<label>Input</label>
+					<input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+				</div>-->
+				<div class="mui-button-row">
+					<button type="button" class="mui-btn mui-btn-primary btn-confirm" onclick="return false;">确认</button>&nbsp;&nbsp;
+					<button type="button" class="mui-btn " onclick="return false;">取消</button>
+				</div>
+			</form>
+			<!--	显示评论弹框结束	-->
+		</div>
+		<!--	人气js开始	-->
+		<script>
+     scoreFun($("#startone"))
+     scoreFun($("#starttwo"),{
+           fen_d:22,//每一个a的宽度
+           ScoreGrade:5//a的个数5
+         });
+     //显示分数
+      $(".show_number li p").each(function(index, element) {
+        var num=$(this).attr("tip");
+        var www=num*2*16;//
+        $(this).css("width",www);
+        $(this).parent(".atar_Show").siblings("span").text(num+"分");
+    });
+    </script><!--	人气js结束	-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios?0.003:0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration:deceleration
+				});
+				mui('#slider').slider().stopped = true;//禁止横向滑动
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.ad-list');
+										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.ad-list');
+										ul.appendChild(createFragment(ul, index, 5));
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+					var createFragment = function(ul, index, count, reverse) {
+						var length = ul.querySelectorAll('li').length;
+						var fragment = document.createDocumentFragment();
+						var li;
+						for (var i = 0; i < count; i++) {
+							li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
+							fragment.appendChild(li);
+						}
+						return fragment;
+					};
+				});
+			})(mui);
+		</script>
+		
+	</body>
+
+</html>

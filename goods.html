@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <script type="text/javascript" src="http://fyq.shengtai114.com/js/jquery-3.2.1.min.js"></script>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="http://fyq.shengtai114.com/css/style.css"/>
+    <style type="text/css">
+.head {
+    background-color: #ea5931;
+    float: left;
+    width: 100%;
+}
+.head ul {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.head li {
+}
+.head .return {
+    float: left;
+    width: 50px;
+    height: 58px;
+    line-height: 58px;
+    text-align: center;
+}
+.head .return img {
+    width: 38px;
+    vertical-align: middle;
+}
+.head .catename {
+    float: left;
+    width: 86px;
+    text-align: center;
+    font-size: 1.2em;
+    height: 58px;
+    line-height: 58px;
+    color: #FFFFFF;
+}
+.head .search {
+    overflow: hidden;
+    width: -webkit-fill-available;
+    margin-left: 146px;
+    margin-right: 80px;
+    height: 58px;
+    line-height: 58px;
+}
+.head .search span {
+    height: 38px;
+    line-height: 38px;
+    display: block;
+    background-color: #fff;
+    margin-top: 12px;
+    position: relative;
+    width: -webkit-fill-available;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 16px;
+}
+.head .search span input {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    border: 0px;
+}
+.head .search span img {
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    width: 32px;
+}
+.head .region {
+    float: right;
+    width: 80px;
+    height: 58px;
+    line-height: 58px;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 0.8em;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.head .region img {
+    margin-left: 5px;
+    width: 16px;
+}
+.item_order {
+    background-color: #eee;
+    float: left;
+    width: 100%;
+}
+.item_order ul {
+    float: left;
+    width: 100%;
+}
+.item_order li {
+    float: left;
+}
+.item_order li span {
+    height: 40px;
+    line-height: 40px;
+    font-size: 1em;
+    text-align: center;
+    display: block;
+    padding-left: 16px;
+    color: #7d7d7d;
+}
+.item_order li span img {
+    width: 16px;
+    vertical-align: middle;
+    margin-left: 3px;
+    display: none;
+}
+.item_order li .on {
+    color: #000000;
+    font-weight: bold;
+}
+.item_order li .on img {
+    display: block;
+    float: right;
+    margin-top: 15px;
+}
+.item_main_list_hot_pic {
+    width: 30%;
+}
+.item_main_list_hot_detailed {
+    float: initial;
+    overflow: hidden;
+    width: auto;
+}
+.item_main_list_hot_detailed_title {
+    height: 38px;
+    line-height: 38px;
+}
+.item_main_list_hot_detailed_title span:nth-child(1) {
+    max-width: 100%;
+}
+.item_main_list_hot_detailed_cate {
+    height: inherit;
+    line-height: inherit;
+}
+.item_main_list_hot_detailed_cate span:nth-child(1) {
+    background-color: #df443b;
+    color: #FFFFFF;
+    padding: 1px 5px 1px 5px;
+    font-size: 0.8em;
+    border-radius: 3px;
+    display: block;
+    float: left;
+}
+.item_main_list_hot_detailed_cate .distance {
+    font-size: 0.8em;
+    float: right;
+    color: #565656;
+}
+.item_main_list_hot_detailed_cate span:nth-child(2) {
+    font-size: 0.8em;
+    float: right;
+    color: #565656;
+    margin-left: 0px;
+}
+.item_main_list_hot_detailed_price {
+    font-size: 1em;
+    color: #E91E63;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+    margin-top: 3px;
+}
+.item_main_list_hot_detailed_price i {
+    margin-left: 10px;
+    font-size: 0.8em;
+    color: #757575;
+    font-weight: initial;
+}
+.item_main_list_hot_detailed_price span {
+    float: right;
+}
+.item_main_list_hot_detailed_price span img {
+    width: 16px;
+}
+.loader_ajax {
+    margin: 0 auto;
+    border-top: 5px solid rgba(96,125,139,.2);
+    border-right: 5px solid rgba(96,125,139,.2);
+    border-bottom: 5px solid rgba(96,125,139,.2);
+    border-left: 5px solid #df443b;
+    -webkit-animation: loding 1s infinite linear;
+    animation: loding 1s infinite linear;
+}
+</style>
+    </head>
+
+    <body>
+<div class="head">
+      <ul>
+    <li class="return"><img src="img/v3/return.svg" alt="返回"></li>
+    <li class="catename"><span>餐饮美食</span></li>
+    <li class="search"> <span>
+      <input type="text" name="search" value="">
+      <img src="img/v3/search.png" alt="搜索"> </span> </li>
+    <li class="region"> <span>延吉市<img src="img/v3/bottom.png" alt="地区"></span> </li>
+  </ul>
+    </div>
+<div class="item_order">
+      <ul>
+    <li><span class="on">推荐排序<img src="img/v3/itembottom.png" alt="选中"></span></li>
+    <li><span>销量最高</span></li>
+  </ul>
+    </div>
+<div class="item_main_list_hot">
+  <ul></ul>
+  <div class="item_main_list_hot_loding" style="display: none;">
+    <div class="loader_ajax"></div>
+  </div>
+</div>
+<script type="text/javascript">
+content_ajax(0,'hot',0,0);
+function content_ajax(page,item_order_by,gpsla,gpslo){
+    var data_content = {
+        'page':page,
+        'item_order_by':item_order_by,
+        'gpsla':gpsla,
+        'gpslo':gpslo
+    };
+    $.ajax({
+        url:'post/goods_ajax.php',
+        type:'post',
+        timeout:5000,
+        data:data_content,
+        success:function(data){
+            //console.log(data);
+            var json_data = JSON.parse(data);
+            $.each(json_data, function(idx, obj) {
+                if (obj.name) {
+                    var item_price = '';
+                    var id = obj.id;
+                    var user = obj.user;
+                    var name = obj.name;
+                    var cate = obj.cate;
+                    var mainimg = obj.mainimg;
+                    var follow = obj.follow;
+                    var ptype = obj.ptype;
+                    var price = obj.price;
+                    var point = obj.point;
+                    var sales = obj.sales;
+                    if (follow == '1') {
+                        var follow_src = "svg/follow_on.svg";
+                    } else {
+                        var follow_src = "svg/follow_off.svg";
+                    }
+                    if (ptype == '3') {
+                        item_price = (price/10)+' 折';
+                    }
+                    if (ptype == '1') {
+                        item_price = point+' <img class=\"index_point_ico\" src=\"img/point_ico.png\" alt=\"积分图标\">';
+                    }
+                    if (ptype == '0' || ptype == '4') {
+                        item_price = price+' ￥';
+                    }
+                    $(".item_main_list_hot ul").append("<li><div class=\"item_main_list_hot_pic\"> <a href=\"detailed_view.php?view="+id+"&amp;type=company\" target=\"_blank\"><img src=\""+mainimg+"\" alt=\"\"></a> </div><div class=\"item_main_list_hot_detailed\"><p class=\"item_main_list_hot_detailed_title\"><span>"+name+"</span></p><p class=\"item_main_list_hot_detailed_cate\"><span>"+cate+"</span><span class=\"distance\"></span></p><p class=\"item_main_list_hot_detailed_price\">"+item_price+"<i>销量 "+sales+"</i><span><img id=\"follow_"+id+"\" onclick=\"follows('"+id+"','"+user+"','"+follow_src+"')\" src=\""+follow_src+"\" alt=\""+name+"\"></span></p></div></li>");
+                }
+            });
+        },
+        beforeSend:function(XMLHttpRequest){ 
+            
+        },
+        complete:function(XMLHttpRequest,status){
+            if(status=='timeout'){
+                alert("当前网络有点不给力");
+            } else if (status=='error') {
+                alert("当前网络连接有误");
+            }
+        }
+    });
+}    
+</script>
+</body>
+</html>
