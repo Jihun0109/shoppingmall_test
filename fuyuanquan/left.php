@@ -13,6 +13,15 @@
 				<?php 
 				if (strstr($admin_purview,"member_list")) {
 				?>
+				<li><a href="profit_setting.php" class=""><i class="lnr lnr-dice"></i> <span>리윤분배설정</span></a>
+				</li>
+				<?php 
+				}
+				?>
+
+				<?php 
+				if (strstr($admin_purview,"member_list")) {
+				?>
 				<li><a href="member_list.php" class=""><i class="lnr lnr-dice"></i> <span>会员列表</span></a>
 				</li>
 				<?php 
