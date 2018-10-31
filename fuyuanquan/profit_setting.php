@@ -33,8 +33,16 @@ include("../include/member_level.php");
 <?php 
 	$arrSettings = [];
 	array_push($arrSettings, array("ps_id" => 1, "ps_title" => "회사", "ps_type"=> "company", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
-	array_push($arrSettings, array("ps_id" => 1, "ps_title" => "주주", "ps_type"=> "partner", "ps_profit"=>0.05, "ps_enabled"=>1, "ps_deep"=>0));
-	array_push($arrSettings, array("ps_id" => 1, "ps_title" => "대리", "ps_type"=> "agent", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
+	array_push($arrSettings, array("ps_id" => 2, "ps_title" => "주주", "ps_type"=> "partner", "ps_profit"=>0.05, "ps_enabled"=>1, "ps_deep"=>0));
+	array_push($arrSettings, array("ps_id" => 3, "ps_title" => "대리", "ps_type"=> "agent", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
+
+	array_push($arrSettings, array("ps_id" => 4, "ps_title" => "xyz 기금회사", "ps_type"=> "group_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+	array_push($arrSettings, array("ps_id" => 5, "ps_title" => "abc 모금 위원회", "ps_type"=> "group_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+	array_push($arrSettings, array("ps_id" => 6, "ps_title" => "나몰라 돈내라.", "ps_type"=> "group_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+
+	array_push($arrSettings, array("ps_id" => 7, "ps_title" => "1차 추천회원", "ps_type"=> "shared_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
+	array_push($arrSettings, array("ps_id" => 8, "ps_title" => "2차 추천회원", "ps_type"=> "shared_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
+	array_push($arrSettings, array("ps_id" => 9, "ps_title" => "3차 추천회원", "ps_type"=> "shared_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
  ?>
 <body>
 	<!-- WRAPPER -->
@@ -66,7 +74,7 @@ include("../include/member_level.php");
 										for ($i=0; $i<count($arrSettings,0); $i++){
 									 ?>
 										<div>
-											<label for="" style="margin-right:0.34rem;"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
+											<label for="" style="margin-right:0.34rem;min-width:240px;text-align:center"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
 											<input type="number" name="se_keyword" 
 												value="<?php echo $arrSettings[$i]['ps_profit']?>" step="0.001" placeholder=""
 												style="padding-left:10px;">
