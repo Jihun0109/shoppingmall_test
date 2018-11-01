@@ -42,8 +42,8 @@ function index_item_list(item_cate,return_loding){
             if (return_loding == "yes") {
                 item_main_list_count = 0;
                 $("#item_list").html("");               
-            }z
-            $.post("post/index_item_followcount_ajax.php",
+            }
+            $.post("post/index_item_followcount_about.php",
             {
                 item_count:item_main_list_count,
                 item_order_by:item_cate

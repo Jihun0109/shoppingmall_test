@@ -32,17 +32,29 @@ include("../include/member_level.php");
 </head>
 <?php 
 	$arrSettings = [];
-	array_push($arrSettings, array("ps_id" => 1, "ps_title" => "회사", "ps_type"=> "company", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
-	array_push($arrSettings, array("ps_id" => 2, "ps_title" => "주주", "ps_type"=> "partner", "ps_profit"=>0.05, "ps_enabled"=>1, "ps_deep"=>0));
-	array_push($arrSettings, array("ps_id" => 3, "ps_title" => "대리", "ps_type"=> "agent", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
+	$shared_count = 0;
 
-	array_push($arrSettings, array("ps_id" => 4, "ps_title" => "xyz 기금회사", "ps_type"=> "group_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
-	array_push($arrSettings, array("ps_id" => 5, "ps_title" => "abc 모금 위원회", "ps_type"=> "group_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
-	array_push($arrSettings, array("ps_id" => 6, "ps_title" => "나몰라 돈내라.", "ps_type"=> "group_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+	$queryAllSettings = "SELECT * FROM profit_setting";
+	if ($result = mysqli_query($mysqli, $queryAllSettings))
+	{
+		while( $row = mysqli_fetch_assoc($result) )
+		{
+			if ($row['ps_level'] == 2)
+				$shared_count++;
+			array_push($arrSettings, $row);
+		}
+	}
+	// array_push($arrSettings, array("ps_id" => 1, "ps_title" => "회사", "ps_type"=> "company", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
+	// array_push($arrSettings, array("ps_id" => 2, "ps_title" => "주주", "ps_type"=> "partner", "ps_profit"=>0.05, "ps_enabled"=>1, "ps_deep"=>0));
+	// array_push($arrSettings, array("ps_id" => 3, "ps_title" => "대리", "ps_type"=> "agent", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
 
-	array_push($arrSettings, array("ps_id" => 7, "ps_title" => "1차 추천회원", "ps_type"=> "shared_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
-	array_push($arrSettings, array("ps_id" => 8, "ps_title" => "2차 추천회원", "ps_type"=> "shared_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
-	array_push($arrSettings, array("ps_id" => 9, "ps_title" => "3차 추천회원", "ps_type"=> "shared_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
+	// array_push($arrSettings, array("ps_id" => 4, "ps_title" => "xyz 기금회사", "ps_type"=> "group_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+	// array_push($arrSettings, array("ps_id" => 5, "ps_title" => "abc 모금 위원회", "ps_type"=> "group_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+	// array_push($arrSettings, array("ps_id" => 6, "ps_title" => "나몰라 돈내라.", "ps_type"=> "group_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>1));
+
+	// array_push($arrSettings, array("ps_id" => 7, "ps_title" => "1차 추천회원", "ps_type"=> "shared_1", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
+	// array_push($arrSettings, array("ps_id" => 8, "ps_title" => "2차 추천회원", "ps_type"=> "shared_2", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
+	// array_push($arrSettings, array("ps_id" => 9, "ps_title" => "3차 추천회원", "ps_type"=> "shared_3", "ps_profit"=>0.025, "ps_enabled"=>1, "ps_deep"=>2));
  ?>
 <body>
 	<!-- WRAPPER -->
@@ -72,15 +84,82 @@ include("../include/member_level.php");
 								<div class="panel-body">
 									<?php 
 										for ($i=0; $i<count($arrSettings,0); $i++){
+											if ($arrSettings[$i]['ps_level'] == 0){
 									 ?>
-										<div>
-											<label for="" style="margin-right:0.34rem;min-width:240px;text-align:center"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
+										<div style="margin-bottom:8px;">
+											<label for="" style="margin-right:10px;min-width:240px;text-align:center"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
 											<input type="number" name="se_keyword" 
 												value="<?php echo $arrSettings[$i]['ps_profit']?>" step="0.001" placeholder=""
 												style="padding-left:10px;">
-											<input type="submit" value="搜索" class="btn btn-primary">
+											<button class="btn btn-primary" style="" onClick="onSaveClick(<?php echo $arrSettings[$i]['ps_id'];?>, this);">更新</button>
 										</div>
-									<?php } ?>
+									<?php 
+										} 
+									}?>
+
+									<hr>
+									<?php 
+										for ($i=0; $i<count($arrSettings,0); $i++){
+											if ($arrSettings[$i]['ps_level'] == 1){
+									 ?>
+										<div style="margin-bottom:8px;">
+											<label for="" style="margin-right:10px;min-width:240px;text-align:center"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
+											<input type="number" name="se_keyword" 
+												value="<?php echo $arrSettings[$i]['ps_profit']?>" step="0.001" placeholder=""
+												style="padding-left:10px;">
+											<button class="btn btn-primary" style="" onClick="onSaveClick(<?php echo $arrSettings[$i]['ps_id'];?>, this);">更新</button>
+											<button class="btn btn-danger" style="" onClick="onDeleteClick(<?php echo $arrSettings[$i]['ps_id'];?>);">删除</button>
+										</div>
+									<?php 
+										} 
+									}?>
+
+									<!-- insert new one -->
+									<div style="margin-bottom:8px;">
+										<!-- <div style="">
+											<select placeholder="단위명을 입력하시오." style="margin-right:10px;min-width:240px;text-align:center;width:240px!important;">
+												<option value="아동기금">아동기금</option>
+											</select>
+										</div> -->
+										<input type="number" placeholder="전화번호를 입력하시오." style="margin-right:10px;min-width:240px;text-align:center;width:240px!important;">
+										<input type="number" name="se_keyword" 
+											value="" step="0.001" placeholder="0~1수를 입력"
+											style="padding-left:10px;">
+										<button class="btn btn-info" style="" onClick="onAddClick(1, this);">附加</button>										
+									</div>
+									<!-- insert new one -->
+									<hr>
+									<?php 
+										for ($i=0; $i<count($arrSettings,0); $i++){
+											if ($arrSettings[$i]['ps_level'] == 2){
+												$shared_count --;
+									 ?>
+										<div style="margin-bottom:8px;">
+											<label for="" style="margin-right:10px;min-width:240px;text-align:center"><?php echo $arrSettings[$i]['ps_title'] ?></label>	
+											<input type="number" name="se_keyword" 
+												value="<?php echo $arrSettings[$i]['ps_profit']?>" step="0.001" placeholder=""
+												style="padding-left:10px;">
+											<button class="btn btn-primary" style="" onClick="onSaveClick(<?php echo $arrSettings[$i]['ps_id'];?>, this);">更新</button>
+											<?php 
+											if ($shared_count == 0){
+											?>
+											<button class="btn btn-danger" style="" onClick="onDeleteClick(<?php echo $arrSettings[$i]['ps_id'];?>);">删除</button>
+											<?php 
+											} 
+											?>
+										</div>
+									<?php 
+										} 
+									}?>
+									<!-- insert new one -->
+									<div style="margin-bottom:8px;">
+										
+										<input type="number" name="se_keyword" 
+											value="" step="0.001" placeholder="0~1수를 입력"
+											style="padding-left:10px;margin-left:254px;">
+										<button class="btn btn-info" style="" onClick="onAddClick(2, this);">附加</button>
+									</div>
+									<!-- insert new one -->
 								</div>
 							</div>
 							<!-- END BASIC TABLE -->
@@ -97,6 +176,7 @@ include("../include/member_level.php");
 		<div class="clearfix"></div>
 
 	</div>
+	
 	<div class="member_agent_alt">
 		<input type="text" name="member_agent_phone" value="" disabled>
 		<input type="number" name="member_agent_price" value="" placeholder="充值">
@@ -116,15 +196,78 @@ include("../include/member_level.php");
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
 	<script type="text/javascript">
-	function member_agent(mb_ag_phone,mb_levels) {
-		$("[name='member_agent_phone']").val(mb_ag_phone);
-		if (mb_levels == "5" || mb_levels == "6" || mb_levels == "7") {
-			$("[name='member_agent_level']").val(mb_levels);
-		} else {
-			$("[name='member_agent_level']").val(0);
+		function onSaveClick(id, element) {
+
+			var profit = $(element).prev().val();
+			$.post("post/profit_setting_update.php",
+				{
+					ps_id:id,
+					ps_profit:profit
+				},
+				function(data,status){
+					if(data==1){
+						location.reload();
+					}
+				});
 		}
-		$(".member_agent_alt").css("display","block");
-	}
+
+		function onDeleteClick(id) {
+			if (confirm("정말 삭제하시겠습니까?")){
+				$.post("post/profit_setting_delete.php",
+					{
+						ps_id:id
+					},
+					function(data,status){
+						if(data==1){
+							location.reload();
+						}
+					});
+			}
+		}
+
+		function onAddClick(level, element) {
+
+			var phone ="";
+			if (level == 1)
+				phone = $(element).prev().prev().val();
+			var profit = $(element).prev().val();
+			
+			if (level == 1 && phone == ""){
+				alert("전화번호를 입력하세요");
+				$(element).prev().prev().focus();
+				return;
+			}
+			if (profit == ""){
+				alert("리윤률을 입력하세요.");
+				$(element).prev().focus();
+				return;
+			}
+			if (parseInt(profit) >= 1 || parseInt(profit) < 0){
+				alert("리윤률은 0부터 1사이의 수자여야 합니다.");
+				$(element).prev().focus();
+				return;
+			}
+			
+			$.post("post/profit_setting_add.php",
+				{
+					phonenumber:phone,
+					ps_profit:profit,
+					ps_level: level
+				},
+				function(data,status){
+					if(data==1){
+						// Success
+						alert("성공");
+						location.reload();
+					} else if (data == 2){
+						// 그런 사용자는 없습니다.
+						alert("그런 사용자는 없습니다.");
+					} else if (data == 0){
+						alert("오유!");
+					}
+				});
+		}
+		
 		$("[name='member_agent_off']").click(function(){
 			$(".member_agent_alt").css("display","none");
 		})

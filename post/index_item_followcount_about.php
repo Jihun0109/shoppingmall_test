@@ -159,18 +159,7 @@ if ($item_cate == "discount_new") {
 			$starCount = 5;
 			$oneCount = ceil($sales_totalNumber / 10) / 5 * 10;
 
-            //$order_by_item = "ORDER BY tl_id DESC";
-			if($sort_id != 0 && $sort_id != -1){
-				// $query = "SELECT teacher_list.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user LEFT JOIN item_cate ON item_cate.ic_id = teacher_list.tl_cate where teacher_list.delete_status != 0 and shop_menu = 'busines' and item_display = '1' and teacher_list.tl_cate = '{$sort_id}' and tl_district1 = '{$user_region}' $order_by_item limit $item_count,10";
-                $query = "select * from teacher_list where tl_cate = '{$sort_id}'";
-               // echo $query;
-			}
-
-			if($sort_id == 0){
-            // $query = "SELECT teacher_list.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where teacher_list.delete_status != 0 and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '{$user_region}' $order_by_item limit $item_count,10";
-
-            $query = "select * from teacher_list where tl_id limit $item_count,10";
-			}
+          $query = "SELECT * FROM college_list LEFT JOIN teacher_list ON college_list.cl_id=teacher_list.tl_class where teacher_list.tl_district1 = '{$user_region}' limit $item_count,10";
 			
 			//echo $query;
 			$nnn = 0;
@@ -189,8 +178,8 @@ if ($item_cate == "discount_new") {
                     $follow_img = "svg/follow_off.svg";
                     }
                     
-					if ($row['tc_mainimg']) {
-						$main_img = $row['tc_mainimg'];
+					if ($row['cl_logo']) {
+						$main_img = $row['cl_logo'];
 					} else {
 						$main_img = "";
 					}
@@ -247,7 +236,10 @@ if ($item_cate == "discount_new") {
                         // 起点坐标
                         $longitude1 = $gpslo;
                         $latitude1 = $gpsla;
-
+                            // echo $row['GPS_X'];
+                            // echo $row['GPS_Y'];
+                            // echo $gpslo;
+                            // echo $gpsla;
                         // 终点坐标
                         $longitude2 = $row['GPS_X'];
                         $latitude2 = $row['GPS_Y'];
@@ -270,34 +262,36 @@ if ($item_cate == "discount_new") {
 <ul class="mui-table-view ad-list" style="">
     <li class="mui-table-view-cell">
          
-        <a href="detailed_view.php?view=<?php echo $row['tl_id'];?>&type=teacher">
+        <a href="user_blog.php?id=<?php echo $row['cl_id'];?>&type=teacher">
             <img class="mui-pull-left" src="<?php echo $main_img;?>" style="/*outline: 1px solid #d3d2d4;*/width:80px;height:80px;border-radius:6px;margin-right:12px;">
             <!-- <img class="mui-pull-left" style="width:80px;height:80px;border-radius:10px;margin-right:5px;" src="<?php echo $main_img;?>"> -->
             <div class="mui-media-body" style="font-size: 0.42rem; line-height: 0.42rem;">
-                <?php echo $row['tl_name']?>
-                <p style="font-size: 0.32rem; margin-top: 10px; line-height: none;" class="mui-ellipsis">
-                    <?php echo nl2br($row['tl_summary']);?>
+                <?php echo $row['cl_name']?>
+                <p style="font-size: 0.32rem; color: #333333;margin-top: 5px; line-height: none;" class="mui-ellipsis">
+                    <?php echo nl2br($row['cl_phone']);?>
                 </p>
             </div>
             <div style="margin-bottom:0px;">
-                <!-- <div class="mui-pull-left mui-col-xs-4 mui-col-sm-4 mui-clearfix" style=" margin-top: 5px;">
-                    <p class="mui-pull-left" style="font-size: 0.32rem;">原价：<span style="text-decoration:line-through">
-                            <?php echo $original;?></span></p>
+                <div class="mui-pull-left mui-col-xs-4 mui-col-sm-4 mui-clearfix" style=" margin-top: 5px;">
+                    <p class="mui-pull-left" style="font-size: 0.32rem;color: #333333"><span>
+                            <?php echo $row['cl_city'];?></span></p>
                     
                 </div>
                 <div class="mui-pull-left mui-col-xs-4 mui-col-sm-4 mui-clearfix" style=" margin-top: 3px;">
-                    <p class="mui-pull-left mui-col-xs-6  mui-col-sm-6" style="font-size: 0.32rem;color: #333333">幸福价：<?php echo $price;?></p>
+                    <p class="mui-pull-left mui-col-xs-6  mui-col-sm-6" style="font-size: 0.32rem;color: #333333"><?php echo $row['tl_district1'];?></p>
                     </p>
-                </div> -->
-                <div class="mui-pull-left mui-col-xs-8 mui-col-sm-8 mui-clearfix" style="margin-top: 10px;">
-                     <span style="color: #999999;margin-top: 10px;">
-                        <span class="fa fa-share-square-o" style="font-size: 0.333rem;color:#ff655e"></span>
-                        <span style="font-size: 0.32rem; color: #999999;"><span class="color-f99c73">
-                                <?php //echo $row['share_count'];?></span>分享可得</span>
+
+                </div>
+
+                <div class="mui-pull-left mui-col-xs-8 mui-col-sm-8 mui-clearfix" style="">
+                     <span style="color: #999999;">
+                        <p style="float: right; color: #333333; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right;">
+                        
                     </span>
-                    <span style="font-size: 0.35rem; color: #999999; display: inline-block;"><span style="color:#ff655e;font-size:0.40rem;">
-                            <?php echo $row['nd_point'];?> </span>幸福豆</span>
-                    <span style="float:right">
+                    <!-- <span style="font-size: 0.35rem; color: #999999; display: inline-block;"><span style="color:#ff655e;font-size:0.40rem;">
+                            <?php echo $row['nd_point'];?> </span>幸福豆</span> -->
+                    <span style="float:right"> </span>
                         <span class="fa fa-map-marker" style="font-size: 0.42rem;color:#ff655e"></span>
                         <span style="font-size: 0.32rem; color: #999999;"><?php echo $distance_string?></span>
                     </span>

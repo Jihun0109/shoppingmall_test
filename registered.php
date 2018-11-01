@@ -11,13 +11,13 @@ $return_url = "..";
 	</div>
 	<div class="registered_content">
 		<ul>
-			<li><div class="registered_ico"><img src="img/login_id.png" alt="手机号码"></div><input type="text" pattern="[0-9]*" name="login_phone" value="" placeholder="请输入手机号码" required>
+			<li style="margin-bottom: -15px "><div class="registered_ico"><img src="img/login_id.png" alt="手机号码"></div><input type="text" pattern="[0-9]*" name="login_phone" value="" placeholder="请输入手机号码" required>
 			</li>
-			<li><div class="registered_ico"><img src="img/nick_ico.png" alt="名称"></div><input type="text" name="login_nick" value="" placeholder="名称" required>
+			<li style="margin-bottom: -15px "><div class="registered_ico"><img src="img/nick_ico.png" alt="名称"></div><input type="text" name="login_nick" value="" placeholder="名称" required>
 			</li>
-			<li><div class="registered_ico"><img src="img/login_pass.png" alt="密码"></div><input type="password" name="login_pass" value="" placeholder="密码" required>
+			<li style="margin-bottom: -10px "><div class="registered_ico"><img src="img/login_pass.png" alt="密码"></div><input type="password" name="login_pass" value="" placeholder="密码" required>
 			</li>
-			<li>
+			<li style="margin-bottom: -5px ">
 				<div data-toggle="distpicker" class="area_select">
 					<div class="form-group">
 						<select class="form-control" id="province1" name="teacher_province1" required>
@@ -36,10 +36,10 @@ $return_url = "..";
 					</div>
 				</div>
 			</li>
-			<li><div class="registered_ico"><img src="img/reg_code.png" alt="验证码"></div><input type="text" name="login_code" value="" placeholder="验证码" required>
+			<li style="margin-bottom: -15px "><div class="registered_ico"><img src="img/reg_code.png" alt="验证码"></div><input type="text" name="login_code" value="" placeholder="验证码" required>
 				<input type="button" id="reg_code_send" value="发送验证码" onclick="sendphonecode('register','login_phone','reg_code_send')" />
 			</li>
-			<li>
+			<li >
 			<?php 
 			if (!$qid) {
 			?>
