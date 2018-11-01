@@ -6,6 +6,17 @@ include('include/vital_item.php');
 include('include/vital_item_cate.php');
 include('include/vital_all.php');
 
+/** Virtual input data */
+
+	$out_trade_no = "201811010512111541063531559461";//$_POST['out_trade_no'];
+	$total_amount = 1000;//$_POST['total_amount'];
+	//支付宝交易号
+	$trade_no = "123456789123456789";//$_POST['trade_no'];
+	//交易状态
+	//$trade_status = $_POST['trade_status'];
+	$payment_method = "alipay";	
+/** Virtual input data */
+
 $query_check = "SELECT pay_status FROM payment_list where pay_trade_no = '{$out_trade_no}'";
 if ($result_check = mysqli_query($mysqli, $query_check))
 {
@@ -33,8 +44,83 @@ if (!$member_id) {
     }
 	
 }
-//利润分成比
-//分红是按照总毛利的70%计算的，剩余20%是给代理商的，8%是股金池，2%是备用金
+
+/** Get Profit Rates */
+$rate_for_partners = 0.05; // Default 5%  주주가 가져가는 비률
+$rate_for_agent = 0.1; // Default 10% 대리들이 가져가는 비률
+$rate_for_our_company = 0.1; // 회사가 가지는 비률.
+
+$arrGroupRates = [];
+$arrSharedRates = [];
+
+$shared_total_money = 0;
+$group_total_money = 0;
+
+$queryAllSettings = "SELECT * FROM profit_setting ORDER BY ps_type";
+if ($result = mysqli_query($mysqli, $queryAllSettings))
+{
+	while( $row = mysqli_fetch_assoc($result) )
+	{
+		if ($row['ps_level'] == 2){ // 추천인들
+			$row['money'] = $total_amount * $row['ps_profit'];
+			array_push($arrSharedRates, $row);
+		} else if ($row['ps_level'] == 1){ //기금회사들
+			$row['money'] = $total_amount * $row['ps_profit'];
+			$group_total_money += $row['money'];
+			array_push($arrGroupRates, $row);
+		} else if ($row['ps_type'] == "agents")
+			$rate_for_agent = $row['ps_profit'];
+		else if ($row['ps_type'] == "partner")
+			$rate_for_partners = $row['ps_profit'];
+		else if ($row['ps_type'] == "partner")
+			$rate_for_our_company = $row['ps_profit'];
+	}
+}
+
+/* Recommend Member Chain  Test with 13591856103*/  
+// 모든 추천인들의 목록을 얻는다. => array_recommend_members
+$first_recommend_member = $row_member['mb_recommend'];
+$array_recommend_members = [$first_recommend_member];
+$recommend_deep = 1;
+
+while (true){
+	$query_recommend_chain = "SELECT mb_recommend FROM fyq_member WHERE mb_phone = {$first_recommend_member};";
+	if ($result_chain = mysqli_query($mysqli, $query_recommend_chain)){
+		if ($result_chain->num_rows == 0)
+			break;
+		$row_chain = mysqli_fetch_assoc($result_chain);
+		if (!$row_chain['mb_recommend'] || $row_chain['mb_recommend'] == "" )
+			break;
+
+		array_push($array_recommend_members, $row_chain['mb_recommend']);
+		$recommend_deep ++;
+		$first_recommend_member = $row_chain['mb_recommend'];
+
+	} else {
+		break;
+	}
+}
+
+// 저리 여기서 수익금을 배당해 버리자!!!
+$money_to_our_company = $total_amount * $rate_for_our_company;
+$money_to_agents = $total_amount * $rate_for_agent;
+$money_to_partners = $total_amount * $rate_for_partners;
+
+for ($i=0; $i<count($arrSharedRates,0); $i++){
+	if ($i < count($array_recommend_members,0)){
+		$arrSharedRates[$i]['ps_phonenumber'] = $array_recommend_members[$i];
+		$arrSharedRates[$i]['money'] = $arrSharedRates[$i]['ps_profit'] * $total_amount;
+		$shared_total_money += $arrSharedRates[$i]['money'];
+	} else {
+		$arrSharedRates[$i]['money'] = 0;
+	}
+}
+
+$rest_amount = $total_amount - $money_to_our_company - $money_to_agents - $money_to_partners - $shared_total_money - $group_total_money;
+/** */
+
+//利润分成比 리익분배비률
+//分红是按照总毛利的70%计算的，剩余20%是给代理商的，8%是股金池，2%是备用金 배당금 총 총 이익의 70 %, 나머지 20 %는 에이전트, 8 %는 주식 풀, 2 %는 예비 자금입니다.
 $t_percent = 0.7;
 $agent_price_int = "1980.00";
 $copartner_price_int = "9800.00";
@@ -54,7 +140,7 @@ if ($result = mysqli_query($mysqli, $query))
     $pay_point_commodity = $row['pay_point_commodity'];
 	$share_phone = $row['share_phone'];
 	$pay_prices = floatval($row['pay_price']);
-	if ($pay_shop == "pay" && $pay_cate == "charge") {
+	if ($pay_shop == "pay" && $pay_cate == "charge") { // 점수충전하는 경우
 		$query_paymember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '{$member_id}'";
         if ($result_paymember = mysqli_query($mysqli, $query_paymember))
         {
@@ -70,7 +156,7 @@ if ($result = mysqli_query($mysqli, $query))
 		
 	} else {
 		
-		$sql_payment = mysqli_query($mysqli,"UPDATE payment_list SET pay_status = '1', ship_status = '1',  pay_real = '{$total_amount}', pay_surplus = '{$pay_original}', pay_trade_no_alipay = '{$trade_no}', payment_method = '{$payment_method}', pay_complete_time = '{$complete_time}' WHERE pay_trade_no = '{$out_trade_no}'");
+		$sql_payment = mysqli_query($mysqli,"UPDATE payment_list SET pay_status = '1', ship_status = '1',  pay_real = '{$total_amount}', pay_trade_no_alipay = '{$trade_no}', payment_method = '{$payment_method}', pay_complete_time = '{$complete_time}' WHERE pay_trade_no = '{$out_trade_no}'");
 		
 		$query_pay = "SELECT * FROM teacher_list where tl_id = '{$pay_shop}'";
 //		$query_pay = "SELECT * FROM teacher_list where tl_id = '{$pay_shop}' and tl_phone = '{$member_id}'";
@@ -80,6 +166,7 @@ if ($result = mysqli_query($mysqli, $query))
 			
 				if ($result_pay = mysqli_query($mysqli, $query_pay))
 				{
+					// 상품정보 => $row_pay
 				$row_pay = mysqli_fetch_assoc($result_pay);
 				if ($pay_cate == "scan") {
 					$level_one_vip1 = ($row_pay['level_one_vip1']*$pay_prices*$t_percent)/100;
@@ -88,8 +175,8 @@ if ($result = mysqli_query($mysqli, $query))
 					$level_one_vip2 = ($row_pay['level_one_vip2']*$pay_prices*$t_percent)/100;
 					$level_two_vip2 = ($row_pay['level_two_vip2']*$pay_prices*$t_percent)/100;
 					$level_three_vip2 = ($row_pay['level_three_vip2']*$pay_prices*$t_percent)/100;
-					$supplyprice = ($row_pay['tl_supplyprice']*$pay_prices)/100;//供货价
-					$spareprice = ($row_pay['spare_gold']*$pay_prices)/100;//备用金
+					$supplyprice = ($row_pay['tl_supplyprice']*$pay_prices)/100;//供货价 공급가격
+					$spareprice = ($row_pay['spare_gold']*$pay_prices)/100;//备用金 여유기금
 					} else {
 						$level_one_vip1 = $row_pay['level_one_vip1'];
 						$level_two_vip1 = $row_pay['level_two_vip1'];
@@ -119,79 +206,122 @@ if ($result = mysqli_query($mysqli, $query))
 				$nd_point = $row_pay['nd_point'];			
 				
 				/*分享得粘豆部分 begin*/
-				if((float)$nd_point > 0 && $share_phone != "")
-				{
-					//更新会员粘豆数
-					mysqli_query($mysqli,"UPDATE fyq_member SET nd_point = nd_point+{$nd_point} WHERE mb_phone = '{$share_phone}'");
-					//存储获得粘豆详细信息
-					mysqli_query($mysqli,"INSERT INTO nd_log (nd_phone, tl_id, pay_id,nd_point) VALUES ('{$share_phone}', '{$pay_shop}', '{$pay_id}', '{$nd_point}')");
-				}
+				// if((float)$nd_point > 0 && $share_phone != "")
+				// {
+				// 	//更新会员粘豆数
+				// 	mysqli_query($mysqli,"UPDATE fyq_member SET nd_point = nd_point+{$nd_point} WHERE mb_phone = '{$share_phone}'");
+				// 	//存储获得粘豆详细信息
+				// 	mysqli_query($mysqli,"INSERT INTO nd_log (nd_phone, tl_id, pay_id,nd_point) VALUES ('{$share_phone}', '{$pay_shop}', '{$pay_id}', '{$nd_point}')");
+				// }
 				
 				/*分享得粘豆部分 end*/
 
 				$sql_payment = mysqli_query($mysqli,"UPDATE teacher_list SET tl_Sales = tl_Sales+1 WHERE tl_id = '{$pay_shop}'");//销量更新
-				if ($supplyprice > 0) {
-					$query_itemmember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '{$tl_phone}'";
-					if ($result_itemmember = mysqli_query($mysqli, $query_itemmember))
-					{
-						$row_itemmember = mysqli_fetch_assoc($result_itemmember);
-						$itemmember_mb_not_gold_before = $row_itemmember['mb_not_gold'];
-						$itemmember_mb_not_gold_after = $itemmember_mb_not_gold_before+$supplyprice;
-					}
-					$sql_gold = mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$supplyprice, mb_not_gold = mb_not_gold+$supplyprice WHERE mb_phone = '{$tl_phone}'");//老师商家佣金
-					if ($sql_gold) {
-						vital_member_plus($tl_phone,$supplyprice,'1','0','0','0','0','0','0',$payment_method);
-						$description_supply = '供货价 - '.$tl_name;
-						$sql_details_tl = mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$supplyprice}', 'revenue', '1', '{$description_supply}' ,'{$tl_phone}', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$itemmember_mb_not_gold_before}', '{$itemmember_mb_not_gold_after}')");//老师商家供货价佣金记录
-						if ($pay_cate == 'partner') {
-							mysqli_query($mysqli,"INSERT INTO vip_card (item_id, item_name, item_pay, user_phone, item_phone, surplus_num, jion_time) VALUES ('{$pay_shop}', '{$tl_name}', '{$total_amount}', '{$member_id}' ,'{$tl_phone}', '{$vip_point}', '{$complete_time}')");
-						} 
-					}
-				}
+				// if ($supplyprice > 0) {
+				// 	$query_itemmember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '{$tl_phone}'";
+				// 	if ($result_itemmember = mysqli_query($mysqli, $query_itemmember))
+				// 	{
+				// 		$row_itemmember = mysqli_fetch_assoc($result_itemmember);
+				// 		$itemmember_mb_not_gold_before = $row_itemmember['mb_not_gold'];
+				// 		$itemmember_mb_not_gold_after = $itemmember_mb_not_gold_before+$supplyprice;
+				// 	}
+				// 	$sql_gold = mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$supplyprice, mb_not_gold = mb_not_gold+$supplyprice WHERE mb_phone = '{$tl_phone}'");//老师商家佣金
+				// 	if ($sql_gold) {
+				// 		vital_member_plus($tl_phone,$supplyprice,'1','0','0','0','0','0','0',$payment_method);
+				// 		$description_supply = '供货价 - '.$tl_name;
+				// 		$sql_details_tl = mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$supplyprice}', 'revenue', '1', '{$description_supply}' ,'{$tl_phone}', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$itemmember_mb_not_gold_before}', '{$itemmember_mb_not_gold_after}')");//老师商家供货价佣金记录
+				// 		if ($pay_cate == 'partner') {
+				// 			mysqli_query($mysqli,"INSERT INTO vip_card (item_id, item_name, item_pay, user_phone, item_phone, surplus_num, jion_time) VALUES ('{$pay_shop}', '{$tl_name}', '{$total_amount}', '{$member_id}' ,'{$tl_phone}', '{$vip_point}', '{$complete_time}')");
+				// 		} 
+				// 	}
+				// }
 				}
 
+					// 구매자 정보 => $row_member
 				$member_province = $row_member['mb_province'];//省
 				$member_city = $row_member['mb_city'];//市
 				$member_area = $row_member['mb_area'];//区
 				$member_recommend = $row_member['mb_recommend'];
+
+				
+
 				$member_level = $row_member['mb_level'];
 				$member_distribution = $row_member['mb_distribution'];
 				$sql_pay_one = 0;
 				$sql_pay_two = 0;
-				$pay_original_all = $total_amount - $supplyprice; //获取毛利价格
+				$pay_original_all = $total_amount;/* - $supplyprice;*/ //获取毛利价格 매출의 총리익금
 				$pay_original = $pay_original_all;
-				$pay_spare = $pay_original_all*0.02;//备用资金
-				$pay_spareprice = $pay_original_all*0.08;//股金池
-				$pay_agent = $pay_original_all*0.2;//代理金
-				if ($pay_spare > 0) {
+				$pay_spare = $pay_original_all*0.02;//备用资金 여유기금
+				$pay_spareprice = $pay_original_all*0.08;//股金池 주식금 
+				//$pay_agent = $pay_original_all*0.2;//代理金 대리금
+
+				// 주식금 배분모듈
+				if ($money_to_partners > 0){
 					$query_sparemember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '13069098870'";
 					if ($result_sparemember = mysqli_query($mysqli, $query_sparemember))
 					{
 						$row_sparemember = mysqli_fetch_assoc($result_sparemember);
 						$sparemember_mb_not_gold_before = $row_sparemember['mb_not_gold'];
-						$sparemember_mb_not_gold_after = $sparemember_mb_not_gold_before+$pay_spare;
-					}
-					$description_spare = '备用资金(2%) - '.$tl_name;
-					$sql_spare = mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$pay_spare, mb_not_gold = mb_not_gold+$pay_spare WHERE mb_phone = '13069098870'");//备用资金
-					if ($pay_spare > 0) {
-						vital_member_plus('13069098870',$pay_spare,'1','0','0','0','0','0','0',$payment_method);
-						$sql_details_spare = mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$pay_spare}', 'revenue', '1', '{$description_spare}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//备用资金
-					}
-					$pay_original = $pay_original - $pay_spare;
-					
-					$description_spare1 = '股金池(8%) - '.$tl_name;//备用资金(自定义)
-					$spareprice = ($spareprice > 0) ? $spareprice : $pay_spareprice;
-					mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$pay_spareprice, mb_not_gold = mb_not_gold+$pay_spareprice WHERE mb_phone = '13069098870'");//股金池
-					vital_member_plus('13069098870',$spareprice,'1','0','0','0','0','0','0',$payment_method);
-					mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$pay_spareprice}', 'revenue', '1', '{$description_spare1}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//股金池
-					
-					$pay_original = $pay_original - $pay_spareprice;
+						$sparemember_mb_not_gold_after = $sparemember_mb_not_gold_before+$money_to_partners;
+
+						$description_spare1 = "股金池(".($rate_for_partners*100)."%) - ".$tl_name;//备用资金(自定义)					
+						mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$money_to_partners, mb_not_gold = mb_not_gold+$money_to_partners WHERE mb_phone = '13069098870'");//股金池
+						vital_member_plus('13069098870',$money_to_partners,'1','0','0','0','0','0','0',$payment_method);
+						mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$money_to_partners}', 'revenue', '1', '{$description_spare1}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//股金池					
+					}					
 				}
 
+					// 기금 배분모듈
+				if ($arrGroupRates){
+					foreach($arrGroupRates as $group){
+						$query_sparemember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '{$group['ps_phonenumber']}'";
+						if ($result_sparemember = mysqli_query($mysqli, $query_sparemember))
+						{
+							$row_sparemember = mysqli_fetch_assoc($result_sparemember);
+							$sparemember_mb_not_gold_before = $row_sparemember['mb_not_gold'];
+							$sparemember_mb_not_gold_after = $sparemember_mb_not_gold_before+$group['money'];
+
+							$description_spare = '备用资金('.($group['ps_profit']*100).'%) - '.$tl_name;
+
+							$sql_spare = mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+{$group['money']}, mb_not_gold = mb_not_gold+{$group['money']} WHERE mb_phone = '13069098870'");//备用资金
+							if ($group['money'] > 0) {
+								vital_member_plus($group['ps_phonenumber'], $group['money'],'1','0','0','0','0','0','0',$payment_method);
+								$sql_details_spare = mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$group['money']}', 'revenue', '1', '{$description_spare}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//备用资金
+							}
+						}
+					}
+				}
+
+					// Old Module 
+
+				// if ($pay_spare > 0) {
+				// 	$query_sparemember = "SELECT mb_not_gold FROM fyq_member where mb_phone = '13069098870'";
+				// 	if ($result_sparemember = mysqli_query($mysqli, $query_sparemember))
+				// 	{
+				// 		$row_sparemember = mysqli_fetch_assoc($result_sparemember);
+				// 		$sparemember_mb_not_gold_before = $row_sparemember['mb_not_gold'];
+				// 		$sparemember_mb_not_gold_after = $sparemember_mb_not_gold_before+$pay_spare;
+				// 	}
+				// 	$description_spare = '备用资金(2%) - '.$tl_name;
+				// 	$sql_spare = mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$pay_spare, mb_not_gold = mb_not_gold+$pay_spare WHERE mb_phone = '13069098870'");//备用资金
+				// 	if ($pay_spare > 0) {
+				// 		vital_member_plus('13069098870',$pay_spare,'1','0','0','0','0','0','0',$payment_method);
+				// 		$sql_details_spare = mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$pay_spare}', 'revenue', '1', '{$description_spare}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//备用资金
+				// 	}
+				// 	$pay_original = $pay_original - $pay_spare;
+					
+				// 	$description_spare1 = '股金池(8%) - '.$tl_name;//备用资金(自定义)
+				// 	$spareprice = ($spareprice > 0) ? $spareprice : $pay_spareprice;
+				// 	mysqli_query($mysqli,"UPDATE fyq_member SET mb_total_gold = mb_total_gold+$pay_spareprice, mb_not_gold = mb_not_gold+$pay_spareprice WHERE mb_phone = '13069098870'");//股金池
+				// 	vital_member_plus('13069098870',$spareprice,'1','0','0','0','0','0','0',$payment_method);
+				// 	mysqli_query($mysqli,"INSERT INTO balance_details (t_money, t_way, t_status, t_description, t_phone, t_caption, t_cate, t_trade_no, t_trade_no_alipay, t_payment_id, t_before_money, t_after_money) VALUES ('{$pay_spareprice}', 'revenue', '1', '{$description_spare1}' ,'13069098870', 'total_gold', 'charge_plus', '{$out_trade_no}', '{$trade_no}', '{$pay_id}', '{$sparemember_mb_not_gold_before}', '{$sparemember_mb_not_gold_after}')");//股金池
+					
+				// 	$pay_original = $pay_original - $pay_spareprice;
+				// }
+
 				/*代理部分 begin*/
-				if($pay_agent > 0)
+				if($money_to_agents > 0)
 				{
-					$pay_original = $pay_original - $pay_agent;
 					$province = $row_pay['tc_province1'];
 					$city = $row_pay['tc_city1'];
 					$area = $row_pay['tl_district1'];
@@ -203,7 +333,7 @@ if ($result = mysqli_query($mysqli, $query))
 					if ($result_ai_1 && $result_ai_1->num_rows > 0){
 						$row_ai_1 = mysqli_fetch_assoc( $result_ai_1 ); // fetch query result
 						$province_code = $row_ai_1['ai_region_code'];	// get and set province code
-						$ai1_total = $pay_agent * $row_ai_1['ai_rate']; // province rate
+						$ai1_total = $money_to_agents * $row_ai_1['ai_rate']; // province rate
 						$ai1 = $ai1_total / $row_ai_1['ai_cnt'];		// provice agent profit
 						
 						// search city with province code.
@@ -213,7 +343,7 @@ if ($result = mysqli_query($mysqli, $query))
 						if ($result_ai_2 && $result_ai_2->num_rows > 0){
 							$row_ai_2 = mysqli_fetch_assoc( $result_ai_2 );			// fetch query result
 							$city_code = $row_ai_2['ai_region_code'];				// get and set city code
-							$ai2_total = $pay_agent * $row_ai_2['ai_rate'];			// city rate
+							$ai2_total = $money_to_agents * $row_ai_2['ai_rate'];			// city rate
 							$ai2 = $ai1_total / $row_ai_21['ai_cnt'];				// city agent profit
 							
 							// search area with city code.
@@ -221,7 +351,7 @@ if ($result = mysqli_query($mysqli, $query))
 							$result_ai_3 = mysqli_query($mysqli, $query_ai_3);
 							if ($result_ai_3 && $result_ai_3->num_rows > 0){				
 								$row_ai_3 = mysqli_fetch_assoc( $result_ai_3 );			// fetch query result
-								$ai3_total = $pay_agent * $row_ai_3['ai_rate'];			// area rate
+								$ai3_total = $money_to_agents * $row_ai_3['ai_rate'];			// area rate
 								$ai3 = $ai1_total / $row_ai_3['ai_cnt'];				// area agent profit
 							
 								for($i = 5; $i <= 7; $i++)

@@ -33,15 +33,26 @@ include("../include/member_level.php");
 <?php 
 	$arrSettings = [];
 	$shared_count = 0;
+	$total_rate = 0;
+	$main_rate = 0;
+	$groups_rate = 0;
+	$shared_rate = 0;
 
 	$queryAllSettings = "SELECT * FROM profit_setting";
 	if ($result = mysqli_query($mysqli, $queryAllSettings))
 	{
 		while( $row = mysqli_fetch_assoc($result) )
 		{
-			if ($row['ps_level'] == 2)
+			if ($row['ps_level'] == 2){
 				$shared_count++;
+				$shared_rate += $row['ps_profit'];
+			} else if ($row['ps_level'] == 1)
+				$groups_rate += $row['ps_profit'];
+			else if ($row['ps_level'] == 0)
+				$main_rate += $row['ps_profit'];
 			array_push($arrSettings, $row);
+			
+			$total_rate += $row['ps_profit'];
 		}
 	}
 	// array_push($arrSettings, array("ps_id" => 1, "ps_title" => "회사", "ps_type"=> "company", "ps_profit"=>0.1, "ps_enabled"=>1, "ps_deep"=>0));
@@ -72,16 +83,17 @@ include("../include/member_level.php");
 				<div class="container-fluid">
 					<h3 class="page-title">会员列表</h3>
 					<div class="search_member">
-					
+						
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- BASIC TABLE -->
 							<div class="panel">
 								<div class="panel-heading">
-									heading
+									
 								</div>
 								<div class="panel-body">
+									<div class="row"><label for=""><?php echo $total_rate." = ".$main_rate." + ".$groups_rate." + ".$shared_rate; ?></label></div></div><br>
 									<?php 
 										for ($i=0; $i<count($arrSettings,0); $i++){
 											if ($arrSettings[$i]['ps_level'] == 0){

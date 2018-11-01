@@ -159,6 +159,7 @@ echo "</script>"
 				</audio>
 			</p>
 		</li>
+		<li><button class="btn" onClick="test_pay_success()"> Test pay_success</button></li>
 		<li class="tc_detailed_line2">
 			<p class="tc_detailed_price">
 				<span>
@@ -664,6 +665,16 @@ endif;
 			}
 		});
 	} );
+
+	function test_pay_success() {
+			$.post("pay_success.php",
+				{
+					
+				},
+				function(data,status){
+					
+				});
+		}
 
 	//点击更多滑倒详细内容
 	function scrollTo(ele, speed) {

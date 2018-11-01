@@ -3,7 +3,7 @@ function vital_tiem($item,$recommend_yes,$recommend_no,$follow_yes,$follow_no,$s
     if ($payment_method == "wechat") {
         $data_base = "../../include/data_base.php";
     } else if ($payment_method == "alipay") {
-        $data_base = "../include/data_base.php";
+        $data_base = "data_base.php";
     } else {
         $data_base = "../include/data_base.php";
     }

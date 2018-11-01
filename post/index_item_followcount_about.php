@@ -266,27 +266,26 @@ if ($item_cate == "discount_new") {
             <img class="mui-pull-left" src="<?php echo $main_img;?>" style="/*outline: 1px solid #d3d2d4;*/width:80px;height:80px;border-radius:6px;margin-right:12px;">
             <!-- <img class="mui-pull-left" style="width:80px;height:80px;border-radius:10px;margin-right:5px;" src="<?php echo $main_img;?>"> -->
             <div class="mui-media-body" style="font-size: 0.42rem; line-height: 0.42rem;">
-                <?php echo $row['cl_name']?>
+                <?php echo $row['tl_name']?>
                 <p style="font-size: 0.32rem; color: #333333;margin-top: 5px; line-height: none;" class="mui-ellipsis">
-                    <?php echo nl2br($row['cl_phone']);?>
+                    <?php echo nl2br($row['tl_summary']);?>
                 </p>
             </div>
-            <div style="margin-bottom:0px;">
-                <div class="mui-pull-left mui-col-xs-4 mui-col-sm-4 mui-clearfix" style=" margin-top: 5px;">
-                    <p class="mui-pull-left" style="font-size: 0.32rem;color: #333333"><span>
-                            <?php echo $row['cl_city'];?></span></p>
-                    
-                </div>
-                <div class="mui-pull-left mui-col-xs-4 mui-col-sm-4 mui-clearfix" style=" margin-top: 3px;">
-                    <p class="mui-pull-left mui-col-xs-6  mui-col-sm-6" style="font-size: 0.32rem;color: #333333"><?php echo $row['tl_district1'];?></p>
-                    </p>
-
-                </div>
+            <div style="margin-top:10px;">
+                
 
                 <div class="mui-pull-left mui-col-xs-8 mui-col-sm-8 mui-clearfix" style="">
+                     
+
                      <span style="color: #999999;">
-                        <p style="float: right; color: #333333; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
-                        <img src="img/like.png" style="height: 16px; float: right;">
+                        <p style="float: right; color: #333333; padding-left: 6px"><?php echo $row['cl_allcount'];?>集</p>
+                        <img src="img/count.png" style="height: 16px; float: right;">
+                        
+                    </span>
+
+                    <span style="color: #999999;">
+                        <p style="float: right; color: #333333; padding-left: 6px; padding-right: 50px"><?php echo $row['cl_allfollow'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right; padding-left: 16px">
                         
                     </span>
                     <!-- <span style="font-size: 0.35rem; color: #999999; display: inline-block;"><span style="color:#ff655e;font-size:0.40rem;">

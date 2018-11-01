@@ -11,7 +11,31 @@ $ps_level = $_POST["ps_level"];
 
 $ps_title = "";
 
-if ($ps_level == 1){	
+
+/* Recommend Member Chain */
+// $first_recommend_member = $phonenumber;
+// $array_recommend_members = [$first_recommend_member];
+// $recommend_deep = 1;
+
+// while (true){
+// 	$query_recommend_chain = "SELECT mb_recommend FROM fyq_member WHERE mb_phone = {$first_recommend_member};";
+// 	if ($result_chain = mysqli_query($mysqli, $query_recommend_chain)){
+// 		if ($result_chain->num_rows == 0)
+// 			break;
+// 		$row_chain = mysqli_fetch_assoc($result_chain);
+// 		if (!$row_chain['mb_recommend'] || $row_chain['mb_recommend'] == "" )
+// 			break;
+
+// 		array_push($array_recommend_members, $row_chain['mb_recommend']);
+// 		$recommend_deep ++;
+// 		$first_recommend_member = $row_chain['mb_recommend'];
+		
+// 	} else {
+// 		break;
+// 	}
+// }
+
+if ($ps_level == 1){
 	$get_member_query = "SELECT * FROM fyq_member WHERE mb_phone = {$phonenumber};";
 	if ($result_member = mysqli_query($mysqli, $get_member_query))
 	{

@@ -398,7 +398,7 @@ include( "include/head_.php" );
     </div>
 </div>
 <div class="item_main_list" style="margin-top:7rem;" onclick="window.open('memo_list.php?me_type=10','_self');">
-    <div style="background-color: white; width: 100%;height: 40px; padding: 5px">
+    <div style="background-color: white; width: 100%;height: 40px; margin-top: -20px;padding: 5px ">
         <img src="img/ads-hot.png" height="100%" style="float: left">
         <p style="font-size: 0.4rem; float: left;background-color: #efeff4; border-radius: 6px;padding: 5px; margin-left: 5px; color: #959595;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">活动公告显示从右到左滑动显示...
         <p style="font-size: 0.4rem; float: right;padding-top: 6px; margin-right: 24px;">更多
