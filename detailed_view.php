@@ -268,7 +268,7 @@ echo "</script>"
 				}
 			?>
 		</li>
-		<?php
+		<!-- <?php
 			if( $member_login && ( $row['tl_point_type'] == "3" || $row['tl_point_type'] == "4" || $type != "company" ) ){
 		?>
 			<li class="tc_detailed_line4">
@@ -281,7 +281,7 @@ echo "</script>"
 			</li>
 		<?php
 			}
-		?>
+		?> -->
 	</ul>
 </div>
 <?php
@@ -461,7 +461,7 @@ if ($type == "company") {
 		<?php 
 }
 ?>
-		<li class="tc_detailed_line4" id="shipping_address" style="background-color: white;margin-bottom: 20px;margin-top: 20px;">
+		<!-- <li class="tc_detailed_line4" id="shipping_address" style="background-color: white;margin-bottom: 20px;margin-top: 20px;">
 			<?php 
 				if($member_login){
 			?>
@@ -473,7 +473,7 @@ if ($type == "company") {
 			</a>
 			<?php
 			}?>
-		</li>
+		</li> -->
 		<li class="tc_detailed_confirm_confirm"> 确定 </li>
 	</ul>
 </div>
@@ -649,7 +649,7 @@ endif;
 						alert("Log in failed");					
 					}
 					else if (data < 1){
-						alert("you did not paid!");
+						alert("请先支付!");
 					}
 					else if (data == 1){
 						$('#player').attr("src", "record/playsong.php?tid=" + tid);						

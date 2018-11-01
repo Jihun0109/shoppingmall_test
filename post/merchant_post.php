@@ -110,23 +110,12 @@ if (isset($_POST["merchant_bg"])) {
     $merchant_bg = '';
 }
 
-if (isset($_POST["com_gpsx"])) {
-    $com_gpsx = $_POST["com_gpsx"]; 
-} else {
-    $com_gpsx = '';
-}
-if (isset($_POST["com_gpsy"])) {
-    $com_gpsy = $_POST["com_gpsy"];
-} else {
-    $com_gpsy = '';
-}
-
 $query_merchant = "SELECT me_id FROM merchant_entry where me_shop = '{$merchant_shop}' or me_phone = {$merchant_phone}";
 	if ($result_merchant = mysqli_query($mysqli, $query_merchant))
 	{
         $merchant_rows = mysqli_num_rows($result_merchant);
         if (!$merchant_rows) {
-            $merchant_sql = mysqli_query($mysqli,"INSERT INTO merchant_entry (me_user,me_shop, me_name, me_phone, me_address, me_contract, me_idcard1, me_idcard2, me_shopdoor, me_original, me_price, me_sigin, me_supply, me_province, me_city, me_area, me_logo, me_bg, GPS_X, GPS_Y) VALUES ('{$member_login}','{$merchant_shop}', '{$merchant_name}', '{$merchant_phone}', '{$merchant_address}', '{$merchant_contract}', '{$merchant_idcard1}', '{$merchant_idcard2}', '{$merchant_shopdoor}', '{$merchant_original}', '{$merchant_price}', '{$merchant_sigin}', '{$merchant_supply}', '{$merchant_province}', '{$merchant_city}', '{$merchant_district}', '{$merchant_logo}', '{$merchant_bg}', '{$com_gpsx}', '{$com_gpsy}')";
+            $merchant_sql = mysqli_query($mysqli,"INSERT INTO merchant_entry (me_user,me_shop, me_name, me_phone, me_address, me_contract, me_idcard1, me_idcard2, me_shopdoor, me_original, me_price, me_sigin, me_supply, me_province, me_city, me_area, me_logo, me_bg) VALUES ('{$member_login}','{$merchant_shop}', '{$merchant_name}', '{$merchant_phone}', '{$merchant_address}', '{$merchant_contract}', '{$merchant_idcard1}', '{$merchant_idcard2}', '{$merchant_shopdoor}', '{$merchant_original}', '{$merchant_price}', '{$merchant_sigin}', '{$merchant_supply}', '{$merchant_province}', '{$merchant_city}', '{$merchant_district}', '{$merchant_logo}', '{$merchant_bg}')");
             if ($merchant_sql) {
                 echo 1;
             } else {

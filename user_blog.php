@@ -107,8 +107,12 @@ function follow_id(fid) {
       <p class="businesses_blog_list_cate"><span><?php echo $row_cate['ic_name'];?></span><span><img id="follow_<?php echo $row_list['tl_id'];?>" onClick="follow_id('<?php echo $row_list['tl_id'];?>')" src="<?php echo $follow_img;?>" alt=""></span></p>
 		<p class="businesses_blog_list_price">
 			<?php 
-			if ($row_list['tl_point_type'] == "0") {
-				echo "￥".$row_list['tl_price']."<i>￥".$row_list['tl_original']."</i>";
+			if ($row_list['tl_point_type'] == "0") 
+			{
+			?>
+				<!-- echo "￥".$row_list['tl_price']."<i>￥".$row_list['tl_original']."</i>"; -->
+				幸福价￥<?php echo $row_list['tl_price'];?><i style="margin-left: 5px; text-decoration: line-through; color: #959595; font-size: 0.8em;">原价￥<?php echo $row_list['tl_original'];?></i>
+			<?php
 			}
 			?>
 			<?php 

@@ -167,7 +167,7 @@ if ($sort == "partner") {
 										if ( $imin > $page_count ) {
 								        ?>
 										<a href="?page=1<?php if ($sort) {echo '&sort='.$sort;}?><?php if ($i_class) {echo '&i_class='.$i_class;}?>">&lt;&lt;</a> <a href="?page=<?php echo ($imin - 1);?><?php if ($sort) {echo '&sort='.$sort;}?><?php if ($i_class) {echo '&i_class='.$i_class;}?>">&lt;</a>
-										<?
+										<?php
                                         }
                                         ?>
 										<?php
@@ -181,7 +181,7 @@ if ($sort == "partner") {
                                         if ( $imax < $max_page ) {
                                             ?>
                                         <a href="?page=<?php echo ($imax + 1);?><?php if ($sort) {echo '&sort='.$sort;}?><?php if ($i_class) {echo '&i_class='.$i_class;}?>">&gt;</a> <a href="?page=<?php echo $max_page;?><?php if ($sort) {echo '&sort='.$sort;}?><?php if ($i_class) {echo '&i_class='.$i_class;}?>">&gt;&gt;</a>
-								        <?
+								        <?php
                                         }
                                         ?>
 									</div>

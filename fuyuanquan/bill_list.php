@@ -141,7 +141,7 @@ if (!strstr($admin_purview,"bill_list")) {
 										if ( $imin > $page_count ) {
 											?>
 										<a href="?page=1<?php if ($bill_phone){echo '&bill_phone='.$bill_phone;}?>">&lt;&lt;</a> <a href="?page=<?php echo ($imin - 1);?><?php if ($bill_phone){echo '&bill_phone='.$bill_phone;}?>">&lt;</a>
-										<?
+										<?php
 	}
 	?>
 										<?php
@@ -155,7 +155,7 @@ if (!strstr($admin_purview,"bill_list")) {
 											if ( $imax < $max_page ) {
 												?>
 											<a href="?page=<?php echo ($imax + 1);?><?php if ($bill_phone){echo '&bill_phone='.$bill_phone;}?>">&gt;</a> <a href="?page=<?php echo $max_page;?><?php if ($bill_phone){echo '&bill_phone='.$bill_phone;}?>">&gt;&gt;</a>
-											<?
+											<?php
 	}
 	?>
 									</div>

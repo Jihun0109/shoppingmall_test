@@ -42,7 +42,7 @@ function index_item_list(item_cate,return_loding){
             if (return_loding == "yes") {
                 item_main_list_count = 0;
                 $("#item_list").html("");               
-            }
+            }z
             $.post("post/index_item_followcount_ajax.php",
             {
                 item_count:item_main_list_count,

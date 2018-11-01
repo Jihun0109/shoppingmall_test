@@ -12,7 +12,7 @@ if (strstr($_SERVER['HTTP_HOST'],"app.shengtai114.com")) {
 $db_host = "localhost";
 $db_user = "root";
 $db_psw = "";//rhksflwk@ng
-$db_name = "fuyuanquan_db";//"fuyuanquan_db";//"study_media_db";
+$db_name = "study_media_db";//"fuyuanquan_db";//"study_media_db";
 $mysqli=mysqli_connect($db_host,$db_user,$db_psw,$db_name); //实例化mysqli
 mysqli_set_charset($mysqli, "utf8");
 

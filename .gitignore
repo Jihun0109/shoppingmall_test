@@ -50,4 +50,5 @@ uploads/*
 wxpay/*
 fuyuanquan/server/*
 fuyuanquan/assets/*
-
+db_config.php
+include/data_base.php

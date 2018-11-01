@@ -169,7 +169,7 @@ if ($item_cate == "discount_new") {
 			if($sort_id == 0){
             // $query = "SELECT teacher_list.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where teacher_list.delete_status != 0 and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '{$user_region}' $order_by_item limit $item_count,10";
 
-            $query = "select * from teacher_list limit $item_count,10";
+            $query = "select * from teacher_list where tl_id limit $item_count,10";
 			}
 			
 			//echo $query;

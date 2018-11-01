@@ -414,36 +414,36 @@ include( "include/head_.php" );
     <div class="clearfix"></div>
     <div id="divTeacherList" style="width: 100%;">
             
-            <?php
+         <?php
 
-if (isset($_GET['teacherGroupNumber'])) {
-    $teacherGroupNumber = $_GET['teacherGroupNumber'];
-} else {
-    $teacherGroupNumber = 0;
-}
-
-    $query = "SELECT * FROM college_list where cl_class = 'busines' ORDER BY cl_allfollow desc, cl_allsales desc, cl_id desc limit ".($teacherGroupNumber*6).", 6";
-    
-    if ($result = mysqli_query($mysqli, $query))
-    {
-        while( $row = mysqli_fetch_assoc($result) ){        
-    ?>
-
-<div style="width: 33%; padding: 5px; float: left; ">
-    <div style="width: 100%;position: relative;">
-        <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">名师</div>
-        <a class="animsition-link" href="user_blog.php?id=<?php echo $row['cl_id'];?>&type=join" target="_self"><img src="<?php echo $row['cl_logo'];?>" style="width: 100%;height: 100%"></a>
-        <div style="width: 100%;height: 24px;position: absolute;z-index: 5;background-color: rgba(0,0,0,0.5);padding: 2px 5px; bottom: 6px;">
-            <p style="float: right; color: white; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
-            <img src="img/like.png" style="height: 16px; float: right;">
-        </div>
-    </div>
-    <div style="color: #313131"><?php echo $row['cl_name'];?></div>
-</div>
-<?php 
+        if (isset($_GET['teacherGroupNumber'])) {
+            $teacherGroupNumber = $_GET['teacherGroupNumber'];
+        } else {
+            $teacherGroupNumber = 0;
         }
-    }
-?>
+
+            $query = "SELECT * FROM college_list where cl_class = 'busines' ORDER BY cl_allfollow desc, cl_allsales desc, cl_id desc limit ".($teacherGroupNumber*6).", 6";
+            
+            if ($result = mysqli_query($mysqli, $query))
+            {
+                while( $row = mysqli_fetch_assoc($result) ){        
+         ?>
+
+            <div style="width: 33%; padding: 5px; float: left; ">
+                <div style="width: 100%;position: relative;">
+                    <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">名师</div>
+                    <a class="animsition-link" href="user_blog.php?id=<?php echo $row['cl_id'];?>&type=join" target="_self"><img src="<?php echo $row['cl_logo'];?>" style="width: 100%;height: 100%"></a>
+                    <div style="width: 100%;height: 24px;position: absolute;z-index: 5;background-color: rgba(0,0,0,0.5);padding: 2px 5px; bottom: 6px;">
+                        <p style="float: right; color: white; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right;">
+                    </div>
+                </div>
+                <div style="color: #313131"><?php echo $row['cl_name'];?></div>
+            </div>
+        <?php 
+                }
+            }
+        ?>
 
         </div>
         <div class="clearfix"></div>
@@ -463,32 +463,32 @@ if (isset($_GET['teacherGroupNumber'])) {
         <div class="clearfix"></div>
     <div id="divLectureList" style="width: 100%;">
             
-            <?php
+                 <?php
 
 
 
-    $query = "SELECT * FROM college_list  ORDER BY cl_allcount desc limit 3";
-    
-    if ($result = mysqli_query($mysqli, $query))
-    {
-        while( $row = mysqli_fetch_assoc($result) ){       
-    ?>
+                $query = "SELECT * FROM college_list  ORDER BY cl_allcount desc limit 3";
+                
+                if ($result = mysqli_query($mysqli, $query))
+                {
+                    while( $row = mysqli_fetch_assoc($result) ){       
+                ?>
 
-<div style="width: 33%; padding: 5px; float: left; ">
-    <div style="width: 100%;position: relative;">
-        <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">学院</div>
-        <a class="animsition-link" href="user_blog.php?view=<?php echo $row['cl_id'];?>&type=teacher" target="_self"><img src="<?php echo $row['cl_logo'];?>" style="width: 100%;height: 100%"></a>
-        <div style="width: 100%;height: 24px;position: absolute;z-index: 5;padding: 2px 5px; bottom: 6px;">
-            <!-- <p style="float: right; color: white; padding-left: 6px"><?php echo $row['tl_class'];?></p>
-            <img src="img/like.png" style="height: 16px; float: right;"> -->
-        </div>
-    </div>
-    <div style="color: #313131"><?php echo $row['cl_name'];?></div>
-</div>
-<?php 
-        }
-    }
-?>
+            <div style="width: 33%; padding: 5px; float: left; ">
+                <div style="width: 100%;position: relative;">
+                    <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">学院</div>
+                    <a class="animsition-link" href="user_blog.php?view=<?php echo $row['cl_id'];?>&type=teacher" target="_self"><img src="<?php echo $row['cl_logo'];?>" style="width: 100%;height: 100%"></a>
+                    <div style="width: 100%;height: 24px;position: absolute;z-index: 5;padding: 2px 5px; bottom: 6px;">
+                        <!-- <p style="float: right; color: white; padding-left: 6px"><?php echo $row['tl_class'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right;"> -->
+                    </div>
+                </div>
+                <div style="color: #313131"><?php echo $row['cl_name'];?></div>
+            </div>
+            <?php 
+                    }
+                }
+            ?>
 
         </div>
       
@@ -505,31 +505,31 @@ if (isset($_GET['teacherGroupNumber'])) {
             <?php
 
 
-    $order_by_item = "ORDER BY tl_id DESC";
-    // $query = "SELECT merchant_entry.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where delete_status = '1' and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '延吉市' $order_by_item limit 3";
-    $query = "SELECT * from merchant_entry where me_id  limit 3";
-    
-    if ($result = mysqli_query($mysqli, $query))
-    {
-        while( $row = mysqli_fetch_assoc($result) ){       
-    ?>
+            $order_by_item = "ORDER BY tl_id DESC";
+            // $query = "SELECT merchant_entry.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where delete_status = '1' and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '延吉市' $order_by_item limit 3";
+            $query = "SELECT * from merchant_entry where me_id  limit 3";
+            
+            if ($result = mysqli_query($mysqli, $query))
+            {
+                while( $row = mysqli_fetch_assoc($result) ){       
+            ?>
     
 
-    <div style="width: 33%; padding: 5px; float: left; ">
-    <div style="width: 100%;position: relative;">
-        <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">附近</div>
-        <a class="animsition-link" href="detailed_view.php?view=<?php echo $row['me_id'];?>&type=teacher" target="_self"><img src="<?php echo $row['me_shopdoor'];?>" style="width: 100%;height: 100%"></a>
-        <div style="width: 100%;height: 24px;position: absolute;z-index: 5;padding: 2px 5px; bottom: 6px;">
-            <!-- <p style="float: right; color: white; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
-            <img src="img/like.png" style="height: 16px; float: right;"> -->
-        </div>
-    </div>
-    <div style="color: #313131"><?php echo $row['me_name'];?></div>
-</div>
-<?php 
-        }
-    }
-?>
+                <div style="width: 33%; padding: 5px; float: left; ">
+                <div style="width: 100%;position: relative;">
+                    <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">附近</div>
+                    <a class="animsition-link" href="detailed_view.php?view=<?php echo $row['me_id'];?>&type=teacher" target="_self"><img src="<?php echo $row['me_shopdoor'];?>" style="width: 100%;height: 100%"></a>
+                    <div style="width: 100%;height: 24px;position: absolute;z-index: 5;padding: 2px 5px; bottom: 6px;">
+                        <!-- <p style="float: right; color: white; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right;"> -->
+                    </div>
+                </div>
+                <div style="color: #313131"><?php echo $row['me_name'];?></div>
+            </div>
+            <?php 
+                    }
+                }
+            ?>
 
         </div>
         <div class="clearfix"></div>
@@ -543,13 +543,54 @@ if (isset($_GET['teacherGroupNumber'])) {
             <a href="./subscriber.php"><p style="float: right;font-size: 0.4rem">查看全部></p></a>
         </div>
         <div class="clearfix"></div>
-         <div class="item_main_list_hot1" style="width: 100%; margin-top: 0px;">
-        <div id="item_list" style="margin:auto;background-color: white"></div>
-        <div class="item_main_list_hot_loding" style="display: none;">
-            <div class="loader_ajax"></div>
+
+                    <div id="divJingList" style="width: 100%;">
+            
+            <?php
+
+
+            $order_by_item = "ORDER BY tl_id DESC";
+            // $query = "SELECT merchant_entry.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where delete_status = '1' and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '延吉市' $order_by_item limit 3";
+            $query = "SELECT * from teacher_list where shop_menu = 'partner'  limit 3";
+            
+            if ($result = mysqli_query($mysqli, $query))
+            {
+                while( $row = mysqli_fetch_assoc($result) ){       
+            ?>
+    
+
+                <div style="width: 33%; padding: 5px; float: left; ">
+                <div style="width: 100%;position: relative;">
+                    <div style="position: absolute;z-index: 5;font-size: 11px;background-color: #ff655e; border-bottom-right-radius:6px; color: white; padding: 0px 5px;height: 19px">精品</div>
+                    <a class="animsition-link" href="detailed_view.php?view=<?php echo $row['tl_id'];?>&type=teacher" target="_self"><img src="<?php echo $row['tc_mainimg'];?>" style="width: 100%;height: 100%"></a>
+                    <div style="width: 100%;height: 24px;position: absolute;z-index: 5;padding: 2px 5px; bottom: 6px;">
+                        <!-- <p style="float: right; color: white; padding-left: 6px"><?php echo $row['cl_allfollow'];?></p>
+                        <img src="img/like.png" style="height: 16px; float: right;"> -->
+                    </div>
+                </div>
+                <div style="color: #313131"><?php echo $row['tl_name'];?></div>
+            </div>
+            <?php 
+                    }
+                }
+            ?>
+
         </div>
-    </div>
+        <div class="clearfix"></div>
+         <!-- <div class="item_main_list_hot1" style="width: 100%; margin-top: 0px;">
+            <div id="item_list" style="margin:auto;background-color: white"></div>
+             <div class="item_main_list_hot_loding" style="display: none;">
+              <div class="loader_ajax"></div>
+           </div>
+        </div> -->
 </div>
+    <div class="clearfix"></div>
+ <div class="item_main_list_hot1" style="width: 100%; margin-top: 10px;">
+            <div id="item_list" style="margin:auto;background-color: white"></div>
+             <div class="item_main_list_hot_loding" style="display: none;">
+              <div class="loader_ajax"></div>
+           </div>
+        </div>
    
 
 </div>
@@ -700,21 +741,19 @@ if (isset($_GET['teacherGroupNumber'])) {
             }
         });
         <?php
-		if($member_login)
-		{
-	?>
-        index_item_list("discount_new", "no", sort_id);
-        check_new_message();
-        //index_item_list("hot_new","no");
+    		if($member_login)
+    		{
+	    ?>
+            index_item_list("discount_new", "no", sort_id);
+            //check_new_message();
+            //index_item_list("hot_new","no");
+        <?php
+		}else{
+	    ?>
+            index_item_list("discount_new", "no", sort_id);
         <?php
 		}
-		else
-		{
-	?>
-        index_item_list("discount_new", "no", sort_id);
-        <?php
-		}
-	?>
+	    ?>
     });
     $("#horizontal-list li").click(function () {
         $("ul#horizontal-list li").removeClass("active");
@@ -785,7 +824,7 @@ if (isset($_GET['teacherGroupNumber'])) {
         windowScrollHight = $(window).height();
         documentScrollHight = $(document).height();
         documentscrollTop = $(document).scrollTop();
-        if ((windowScrollHight + documentscrollTop) >= (documentScrollHight - 200) || return_loding == "yes") {
+        if ((windowScrollHight + documentscrollTop) >= (documentScrollHight-4200) || return_loding == "yes") {
             looding = $(".item_main_list_hot_loding").css("display");
             if (looding == "none") {
                 var item_main_list_count = $("#item_list ul").length;

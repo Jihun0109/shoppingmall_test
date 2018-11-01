@@ -165,7 +165,7 @@ echo "</script>"
 					<?php 
 					if ($row['tl_point_type'] == "0") {
 					?>
-						粘糕价￥<?php echo $row['tl_price'];?><i style="margin-left: 5px; text-decoration: line-through; color: #959595; font-size: 0.8em;">原价￥<?php echo $row['tl_original'];?></i>
+						幸福价￥<?php echo $row['tl_price'];?><i style="margin-left: 5px; text-decoration: line-through; color: #959595; font-size: 0.8em;">原价￥<?php echo $row['tl_original'];?></i>
 						<?php if ($row_cate['ic_name']) {?>
 						<span class="item_cate">
 							<?php echo $row_cate['ic_name'];?>
@@ -240,7 +240,7 @@ echo "</script>"
                     <?php 
 					if ($row['tl_point_type'] == "4") {
 					?>
-						粘糕价￥<?php echo $row['tl_price'];?><i style="margin-left: 5px; text-decoration: line-through; color: #959595; font-size: 0.8em;">原价￥<?php echo $row['tl_original'];?></i>
+						幸福价￥<?php echo $row['tl_price'];?><i style="margin-left: 5px; text-decoration: line-through; color: #959595; font-size: 0.8em;">原价￥<?php echo $row['tl_original'];?></i>
 						<?php if ($row_cate['ic_name']) {?>
 						<span class="view_cate">
 							<?php echo $row_cate['ic_name'];?>
@@ -649,7 +649,7 @@ endif;
 						alert("Log in failed");					
 					}
 					else if (data < 1){
-						alert("you did not paid!");
+						alert("请先支付!");
 					}
 					else if (data == 1){
 						$('#player').attr("src", "record/playsong.php?tid=" + tid);						

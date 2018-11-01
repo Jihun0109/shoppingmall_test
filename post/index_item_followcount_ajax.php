@@ -156,7 +156,7 @@ if ($item_cate == "discount_new") {
 
             $order_by_item = "ORDER BY tl_id DESC";
             // $query = "SELECT merchant_entry.*, merchant_entry.me_shop FROM teacher_list LEFT JOIN merchant_entry ON teacher_list.tl_phone=merchant_entry.me_user where delete_status = '1' and shop_menu = 'teacher' and item_display = '1' and tl_district1 = '{$user_region}' $order_by_item limit $item_count,10";
-            $query = "SELECT * from merchant_entry where me_id  limit 13";
+            $query = "SELECT * from merchant_entry limit $item_count,5";
             //echo $query;
             $nnn = 0;
             $result = mysqli_query($mysqli, $query);
@@ -244,7 +244,7 @@ if ($item_cate == "discount_new") {
                         $distance = '';
                     }
                     //echo $gpslo;
-                    echo $longitude2;
+                   // echo $longitude2;
             ?>
 
 

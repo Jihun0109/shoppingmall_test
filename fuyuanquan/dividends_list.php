@@ -339,7 +339,7 @@ $_GET['div_year'] = (isset($_GET['div_month']) && $_GET['div_month'] != "") ? da
 										if ( $imin > $page_count ) {
 											?>
 										<a href="?page=1<?php echo '&div_phone='.$div_phone.'&div_year='.$div_year.'&div_month='.$div_month;?>">&lt;&lt;</a> <a href="?page=<?php echo ($imin - 1);?><?php echo '&div_phone='.$div_phone.'&div_year='.$div_year.'&div_month='.$div_month;?>">&lt;</a>
-										<?
+										<?php
 	}
 	?>
 										<?php
@@ -353,7 +353,7 @@ $_GET['div_year'] = (isset($_GET['div_month']) && $_GET['div_month'] != "") ? da
 											if ( $imax < $max_page ) {
 												?>
 											<a href="?page=<?php echo ($imax + 1);?><?php echo '&div_phone='.$div_phone.'&div_year='.$div_year.'&div_month='.$div_month;?>">&gt;</a> <a href="?page=<?php echo $max_page;?><?php echo '&div_phone='.$div_phone.'&div_year='.$div_year.'&div_month='.$div_month;?>">&gt;&gt;</a>
-											<?
+											<?php
 	}
 	?>
 									</div>

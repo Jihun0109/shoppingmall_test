@@ -58,30 +58,80 @@
        .member_config_content_input {
 	        width: 60%;
         }
+        
+        .member_config_content ul {
+        	position: relative;
+			margin-top: 0;
+			margin-bottom: 0;
+			padding-left: 0;
+			list-style: none;
+			background-color: #fff;
+        }
+        .member_config_content li {
+        	position: relative;
+		    overflow: hidden;
+		    padding-bottom: 5px;
+		    margin-bottom: 0;
+		    padding-top: 0px;
+		    line-height: 40px;
+		    border-bottom: 1px solid #dddddd;
+        }
+        
+        .head {
+        	position: relative;
+        }
+        .inputbox {
+        	margin-right: 15px;
+        }
+        input {
+		    height: 30px;
+		    width: 100%;
+		    padding-left: 0;
+		    border-radius: 3px;
+		    font-size: 1em;
+		    text-align: right;
+        	border: 1px solid hsla(0,0%,90%,0);
+			background: none;
+			background-clip: padding-box;
+		}
+		.member_config_content li span:nth-child(1) {
+		    padding-left: 15px;
+		    float: left;
+		}
+		.member_config_content li span:nth-child(2) {
+		    padding-right: 0%; 
+		    float: right;
+		}
+		.member_config_content .member_sex {
+		    width: 120px;
+		    height: 30px;
+		    padding-right: 0px;
+		    font-size: 1.2em;
+		}
     </style>
 </head>
 
-<body>
+<body style="background: white;">
 	<div>
 	<?php
 	include("include/top_navigate.php");
 	?>
 	<div class="member_config_content">
-		<ul>
-			<li>
-				<span>头像</span>
-                <span>				
+		<ul style="padding-top: 10px;">
+			<li style="padding-bottom: 10px;">
+				<span style="line-height: 60px;">头像</span>
+                <span class="inputbox">				
 				<span class="loading_upfile"><img src="../img/loding.gif" alt="加载中"></span>
                 <img id="feedback" src="<?php if ($row_member['mb_ico']) {echo $row_member['mb_ico'];} else {echo "../img/test/ico.png";}?>" alt="">
-                <span><input type="file" name="file1" class="inputfile"></span>
+                <span><input type="file" name="file1" class="input inputfile"></span>
 				</span>
 			</li>
 			<li>
-				<span>名称</span><span><input type="text" name="member_nick" value="<?php echo $row_member['mb_nick'];?>"></span>
+				<span>名称</span><span class="inputbox"><input type="text" name="member_nick" value="<?php echo $row_member['mb_nick'];?>"></span>
 			</li>
 			<li>
 				<span>性别</span>
-				<span>
+				<span class="inputbox">
 			  	<select class="member_sex">
 				  <option value="1">男</option>
 				  <option value="2">女</option>
@@ -89,21 +139,21 @@
 				</span>
 			</li>
 			<li>
-				<span>手机号</span><span><?php echo $row_member['mb_phone'];?></span>
+				<span>手机号</span><span class="inputbox"><?php echo $row_member['mb_phone'];?></span>
 			</li>
 			<li>
-				<span>QQ</span><span class="member_config_content_input"><input type="number" name="member_qq" pattern="[0-9]*" value="<?php echo $row_member['mb_qq'];?>"></span>
+				<span>QQ</span><span class="inputbox member_config_content_input"><input type="number" name="member_qq" pattern="[0-9]*" value="<?php echo $row_member['mb_qq'];?>"></span>
+			</li>
+			<li style="display: none;">
+				<span>收货地址</span><span class="inputbox member_config_content_input"><input type="text" name="member_receivingaddress" value="<?php echo $row_member['mb_receiving_address'];?>"></span>
+			</li>
+			<li style="display: none;">
+				<span>邮编</span><span class="inputbox member_config_content_input"><input type="text" name="member_postcode" pattern="[0-9]*" value="<?php echo $row_member['mb_postcode'];?>"></span>
 			</li>
 			<li>
-				<span>收货地址</span><span class="member_config_content_input"><input type="text" name="member_receivingaddress" value="<?php echo $row_member['mb_receiving_address'];?>"></span>
+				<a style="padding-left: 15px;" href="member_bank.php" target="_self" class="member_bank_link animsition-link">收款信息</a>
 			</li>
-			<li>
-				<span>邮编</span><span class="member_config_content_input"><input type="text" name="member_postcode" pattern="[0-9]*" value="<?php echo $row_member['mb_postcode'];?>"></span>
-			</li>
-			<li>
-				<a href="member_bank.php" target="_self" class="member_bank_link animsition-link">收款信息</a>
-			</li>
-			<li>
+			<li style="display: none;">
 				<a href="member_pass.php" target="_self" class="member_pass_link animsition-link">修改密码</a>
 			</li>
 		</ul>

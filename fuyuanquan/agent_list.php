@@ -125,7 +125,7 @@ include("../include/member_level.php");
 										if ( $imin > $page_count ) {
 											?>
 										<a href="?page=1";?>">&lt;&lt;</a> <a href="?page=".($imin - 1);?>">&lt;</a>
-										<?
+										<?php
 	}
 	?>
 										<?php
@@ -139,7 +139,7 @@ include("../include/member_level.php");
 											if ( $imax < $max_page ) {
 												?>
 											<a href="?page=".($imax + 1);?>">&gt;</a> <a href="?page=".$max_page;?>">&gt;&gt;</a>
-											<?
+											<?php
 	}
 	?>
 									</div>

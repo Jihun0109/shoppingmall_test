@@ -138,7 +138,7 @@ if (!strstr($admin_purview,"busines_list")) {
 										if ( $imin > $page_count ) {
 											?>
 										<a href="?page=1">&lt;&lt;</a> <a href="?page=<?php echo ($imin - 1);?>">&lt;</a>
-										<?
+										<?php
 	}
 	?>
 										<?php
@@ -152,7 +152,7 @@ if (!strstr($admin_purview,"busines_list")) {
 											if ( $imax < $max_page ) {
 												?>
 											<a href="?page=<?php echo ($imax + 1);?>">&gt;</a> <a href="?page=<?php echo $max_page;?>">&gt;&gt;</a>
-											<?
+											<?php
 	}
 	?>
 									</div>
